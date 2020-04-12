@@ -62,7 +62,7 @@ public class ScrollUpgradeInfo implements Encodable {
             case Normal:
                 int chance = getChance();
                 if (equip.hasAttribute(EquipAttribute.LuckyDay)) {
-                    chance += 10;
+                    chance += 100; // if use luckyDay = 100 %
                 }
                 success = Util.succeedProp(chance);
                 if (success) {

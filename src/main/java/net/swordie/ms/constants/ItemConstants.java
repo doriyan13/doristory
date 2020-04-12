@@ -42,8 +42,8 @@ public class ItemConstants {
 
     static final org.apache.log4j.Logger log = LogManager.getRootLogger();
 
-    public static final int THIRD_LINE_CHANCE = 50;
-    public static final int PRIME_LINE_CHANCE = 15;
+    public static final int THIRD_LINE_CHANCE = 75; //the chance for a third potentioal line
+    public static final int PRIME_LINE_CHANCE = 75; //the chance for prime line!
 
     public static final int HYPER_TELEPORT_ROCK = 5040004;
 
@@ -749,11 +749,11 @@ public class ItemConstants {
         switch(id) {
             case ItemConstants.RED_CUBE: // Red cube
             case ItemConstants.BONUS_POT_CUBE: // Bonus potential cube
-                res = 30;
+                res = 60;
                 break;
             case ItemConstants.BLACK_CUBE:
             case ItemConstants.WHITE_BONUS_POT_CUBE:
-                res = 40;
+                res = 80;
                 break;
         }
         return res;
@@ -1302,8 +1302,8 @@ public class ItemConstants {
         if (equip.hasUsedSlots()) {
             scrolls.add(new ScrollUpgradeInfo(4, "Innocence Scroll 30%",
                     SpellTraceScrollType.Innocence, 0, new TreeMap<>(), INNOCENCE_ST_COST, 30));
-            scrolls.add(new ScrollUpgradeInfo(5, "Clean Slate Scroll 5%",
-                    SpellTraceScrollType.CleanSlate, 0, new TreeMap<>(), CLEAN_SLATE_ST_COST, 5));
+            scrolls.add(new ScrollUpgradeInfo(5, "Clean Slate Scroll 100%",
+                    SpellTraceScrollType.CleanSlate, 0, new TreeMap<>(), CLEAN_SLATE_ST_COST, 100));
         }
         return scrolls;
     }
@@ -1424,7 +1424,7 @@ public class ItemConstants {
     }
 
     public static Set<DropInfo> getEquipMobDrops(short job, int level) {
-        level = Math.min(140, (level / 10) * 10); // round it to the nearest 10th level + max of level 140
+        level = Math.min(160, (level / 10) * 10); // round it to the nearest 10th level + max of level 140 , wondring if i change it to 160 what will happen?
         ItemJob itemJob = GameConstants.getItemJobByJob(job);
         if (itemJob == null) {
             itemJob = ItemJob.BEGINNER;

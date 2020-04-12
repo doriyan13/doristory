@@ -10,7 +10,6 @@ import net.swordie.ms.util.FileTime;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.util.container.Triple;
-import net.swordie.ms.world.event.PinkZakumEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,12 +21,12 @@ import java.util.List;
 public class GameConstants {
     public static final int CHANNELS_PER_WORLD = 10;
     public static final int BUFFED_CHANNELS = 7;
-    public static final int MOB_EXP_RATE = 10;
+    public static final int MOB_EXP_RATE = 1; //was 10
     public static final long MAX_MONEY = 9_999_999_999L;
     public static final short DAMAGE_SKIN_MAX_SIZE = 100;
     public static final int MAX_PET_AMOUNT = 3;
     public static final int MAX_HP_MP = 500000;
-    public static final long DAMAGE_CAP = 50_000_000;
+    public static final long DAMAGE_CAP = 50_000_000; //was 50mil
     public static final int BEGINNER_SP_MAX_LV = 7;
     public static final int RESISTANCE_SP_MAX_LV = 10;
     public static final int QUICKSLOT_LENGTH = 28;
@@ -45,12 +44,12 @@ public class GameConstants {
     public static final Rect MOB_CHECK_RECT = new Rect(-100, -100, 100, 100);
 
     // Drop
-    public static final int DROP_HEIGHT = 100; // was 20
+    public static final int DROP_HEIGHT = 20; // was 20
     public static final int DROP_DIFF = 25;
     public static final int DROP_REMAIN_ON_GROUND_TIME = 120; // 2 minutes
     public static final int DROP_REMOVE_OWNERSHIP_TIME = 30; // 30 sec
-    public static final int MIN_MONEY_MULT = 6;
-    public static final int MAX_MONEY_MULT = 9;
+    public static final int MIN_MONEY_MULT = 60;// was 6
+    public static final int MAX_MONEY_MULT = 90;//was 9
     public static final int MAX_DROP_CHANCE = 10000;
 
     // Combo Kill
@@ -106,7 +105,7 @@ public class GameConstants {
     public static final double RED_EXP_ORB_MULT = 5;
 
     // Mob
-    public static final int MOB_SKILL_CHANCE = 20;
+    public static final int MOB_SKILL_CHANCE = 50; //was 20
     public static final int NX_DROP_CHANCE = 70;
 
     // Elite mob
@@ -146,7 +145,7 @@ public class GameConstants {
     public static final int DOJO_SPAWM_BOSS_DELAY = 3; // Spawn delay, in seconds, per boss on the Dojo Floors
 
     // Monster Park
-    public static final byte MAX_MONSTER_PARK_RUNS = 7; // Max Monster Park runs per character
+    public static final byte MAX_MONSTER_PARK_RUNS = 70; // Max Monster Park runs per character - was 7
     public static final int MONSTER_PARK_EXP_QUEST = 99999; // Quest where the Exp for MP runs gets stored.
     public static final int MONSTER_PARK_ENTRANCE_CHECK_QUEST = 99997; // Quest where the Number of MP runs are stored
     public static final int MONSTER_PARK_TIME = 10  *60; // 10minutes
@@ -366,21 +365,21 @@ public class GameConstants {
 
                 {450, 0},
                 {350, 0},
-                {300, 7},
-                {300, 14},
-                {300, 14},
+                {300, 0}, //7
+                {300, 0}, //14
+                {300, 0}, //14
 
-                {300, 21},
-                {300, 21},
-                {300, 21},
-                {300, 28},
-                {300, 28},
+                {300, 0}, //21
+                {300, 0}, //21
+                {300, 0}, //21
+                {300, 0}, //28
+                {300, 0}, //28
 
-                {300, 70},
-                {300, 70},
-                {30, 194},
-                {20, 294},
-                {10, 396},
+                {300, 0}, //70
+                {300, 0}, //70
+                {30, 0}, //194
+                {20, 0}, //294
+                {10, 0}, //396
         };
     }
 
@@ -455,44 +454,46 @@ public class GameConstants {
 
     public static int getStatForSuperiorEnhancement(int reqLevel, short chuc) {
         if (chuc == 0) {
-            return reqLevel < 110 ? 2 : reqLevel < 149 ? 9 : 19;
+            return reqLevel < 110 ? 2 : reqLevel <= 150 ? 9 : 19;
         } else if (chuc == 1) {
-            return reqLevel < 110 ? 3 : reqLevel < 149 ? 10 : 20;
+            return reqLevel < 110 ? 3 : reqLevel <= 150 ? 10 : 20;
         } else if (chuc == 2) {
-            return reqLevel < 110 ? 5 : reqLevel < 149 ? 12 : 22;
+            return reqLevel < 110 ? 5 : reqLevel <= 150 ? 12 : 22;
         } else if (chuc == 3) {
-            return reqLevel < 149 ? 15 : 25;
+            return reqLevel <= 150 ? 15 : 25;
         } else if (chuc == 4) {
-            return reqLevel < 149 ? 19 : 29;
+            return reqLevel <= 150 ? 19 : 29;
         }
         return 0;
     }
-
+    //as i can see you dont have an option for an equips thats are higher then lvl 150
     public static int getAttForSuperiorEnhancement(int reqLevel, short chuc) {
         if (chuc == 5) {
-            return reqLevel < 150 ? 5 : 9;
+            return reqLevel <= 150 ? 5 : 9;
         } else if (chuc == 6) {
-            return reqLevel < 150 ? 6 : 10;
+            return reqLevel <= 150 ? 6 : 10;
         } else if (chuc == 7) {
-            return reqLevel < 150 ? 7 : 11;
+            return reqLevel <= 150 ? 7 : 11;
         } else {
             return chuc == 8 ? 12 : chuc == 9 ? 13 : chuc == 10 ? 15 : chuc == 11 ? 17 : chuc == 12 ? 19 : chuc == 13 ? 21 : chuc == 14 ? 23 : 0;
         }
     }
-
+    //for my understanding chuc is the amout of starforce?
     // ugliest function in swordie
     public static int getEquipStatBoost(Equip equip, EnchantStat es, short chuc) {
         int stat = 0;
         // hp/mp
         if (es == EnchantStat.MHP || es == EnchantStat.MMP) {
-            stat += chuc <= 2 ? 5 : chuc <= 4 ? 10 : chuc <= 6 ? 15 : chuc <= 8 ? 20 : chuc <= 14 ? 25 : 0;
+            stat += chuc <= 2 ? 50 : chuc <= 4 ? 100 : chuc <= 6 ? 150 : chuc <= 8 ? 200 : chuc <= 14 ? 250 : 0;
         }
         int reqLevel = equip.getrLevel() + equip.getiIncReq();
         // all stat
         if (es == EnchantStat.STR || es == EnchantStat.DEX || es == EnchantStat.INT || es == EnchantStat.LUK) {
             if (chuc <= 4) {
-                stat += 2;
-            } else if (chuc <= 14) {
+                stat += 5;
+            } else if (chuc <= 9) {
+                stat += 10;
+            }else if (chuc <= 14) {
                 stat += 3;
             } else if (chuc <= 21) {
                 stat += reqLevel <= 137 ? 7 : reqLevel <= 149 ? 9 : reqLevel <= 159 ? 11 : reqLevel <= 199 ? 13 : 15;
@@ -500,35 +501,41 @@ public class GameConstants {
         }
         // att for all equips
         if ((es == EnchantStat.PAD || es == EnchantStat.MAD) && chuc >= 15) {
-            if (chuc == 15) {
+            if (chuc == 5) {
                 stat += reqLevel <= 137 ? 6 : reqLevel <= 149 ? 7 : reqLevel <= 159 ? 8 : reqLevel <= 199 ? 9 : 12;
-            } else if (chuc == 16) {
+            } else if (chuc == 6) {
                 stat += reqLevel <= 137 ? 7 : reqLevel <= 149 ? 8 : reqLevel <= 159 ? 9 : reqLevel <= 199 ? 9 : 13;
-            } else if (chuc == 17) {
+            } else if (chuc == 7) {
                 stat += reqLevel <= 137 ? 7 : reqLevel <= 149 ? 8 : reqLevel <= 159 ? 9 : reqLevel <= 199 ? 10 : 14;
-            } else if (chuc == 18) {
+            } else if (chuc == 8) {
                 stat += reqLevel <= 137 ? 8 : reqLevel <= 149 ? 9 : reqLevel <= 159 ? 10 : reqLevel <= 199 ? 11 : 14;
-            } else if (chuc == 19) {
+            } else if (chuc == 9) {
                 stat += reqLevel <= 137 ? 9 : reqLevel <= 149 ? 10 : reqLevel <= 159 ? 11 : reqLevel <= 199 ? 12 : 15;
-            } else if (chuc == 20) {
+            } else if (chuc == 10) {
                 stat += reqLevel <= 149 ? 11 : reqLevel <= 159 ? 12 : reqLevel <= 199 ? 13 : 16;
-            } else if (chuc == 21) {
+            } else if (chuc == 11) {
                 stat += reqLevel <= 149 ? 12 : reqLevel <= 159 ? 13 : reqLevel <= 199 ? 14 : 17;
-            } else if (chuc == 22) {
+            } else if (chuc == 12) {
                 stat += reqLevel <= 149 ? 17 : reqLevel <= 159 ? 18 : reqLevel <= 199 ? 19 : 21;
-            } else if (chuc == 23) {
+            } else if (chuc == 13) {
                 stat += reqLevel <= 149 ? 19 : reqLevel <= 159 ? 20 : reqLevel <= 199 ? 21 : 23;
-            } else if (chuc == 24) {
+            } else if (chuc >= 14) {
                 stat += reqLevel <= 149 ? 21 : reqLevel <= 159 ? 22 : reqLevel <= 199 ? 23 : 25;
             }
         }
         // att gains for weapons
         if (ItemConstants.isWeapon(equip.getItemId()) && !ItemConstants.isSecondary(equip.getItemId())) {
-            if (chuc <= 14) {
+            if (chuc <= 5) {
                 if (es == EnchantStat.PAD) {
                     stat += equip.getiPad() * 0.02;
                 } else if (es == EnchantStat.MAD) {
                     stat += equip.getiMad() * 0.02;
+                }
+            }else if (chuc <= 10) {
+                if (es == EnchantStat.PAD) {
+                    stat += equip.getiPad() * 0.2;
+                } else if (es == EnchantStat.MAD) {
+                    stat += equip.getiMad() * 0.2;
                 }
             } else if (es == EnchantStat.PAD || es == EnchantStat.MAD) {
                 stat += chuc == 22 ? 13 : chuc == 23 ? 12 : chuc == 24 ? 11 : 0;
@@ -540,12 +547,12 @@ public class GameConstants {
         // att gain for gloves, enhancements 4/6/8/10 and 12-14
         if (ItemConstants.isGlove(equip.getItemId()) && (es == EnchantStat.PAD || es == EnchantStat.MAD)) {
             if ((chuc <= 10 && chuc % 2 == 0) || (chuc >= 12 && chuc <= 14)) {
-                stat += 1;
+                stat += 50;
             }
         }
         // speed/jump for shoes
         if (ItemConstants.isShoe(equip.getItemId()) && (es == EnchantStat.SPEED || es == EnchantStat.JUMP) && chuc <= 4) {
-            stat += 1;
+            stat += 5;
         }
         return stat;
     }
@@ -792,7 +799,7 @@ public class GameConstants {
     }
 
     public static boolean isValidName(String name) {
-        return name.length() >= 4 && name.length() <= 13 && Util.isDigitLetterString(name);
+        return name.length() >= 3 && name.length() <= 13 && Util.isDigitLetterString(name); //cuz i want to call my char GOD
     }
 
     public static boolean isValidEmotion(int emotion) {
