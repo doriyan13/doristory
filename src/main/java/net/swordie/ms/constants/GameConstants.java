@@ -205,20 +205,20 @@ public class GameConstants {
     // Starforce
     private static final int STARFORCE_LEVELS[][] = {
             { Integer.MAX_VALUE, -1 }, // per equip
-            { 137, (ServerConstants.VERSION >= 197 ? 20 : 13) },
-            { 127, (ServerConstants.VERSION >= 197 ? 15 : 12) },
-            { 117, 10 },
-            { 107, 8 },
-            { 95, 5 },
+            { 137, (ServerConstants.VERSION >= 197 ? 20 : 13) }, // was 20 : 13
+            { 127, (ServerConstants.VERSION >= 197 ? 25 : 12) }, // was 25 : 12
+            { 117, 10 }, //was 10
+            { 107, 8 }, //was 8
+            { 95, 5 }, //was 5
     };
 
     private static final int STARFORCE_LEVELS_SUPERIOR[][] = {
-            { Integer.MAX_VALUE, 15 },
-            { 137, 12 },
-            { 127, 10 },
-            { 117, 8 },
-            { 107, 5 },
-            { 95, 3 },
+            { Integer.MAX_VALUE, 15 }, //was 15
+            { 137, 12 }, //was 12
+            { 127, 10 }, //was 10
+            { 117, 8 }, //was 8
+            { 107, 5 }, //was 5
+            { 95, 3 }, //was 3
     };
 
     private static List<QuickMoveInfo> quickMoveInfos;
@@ -498,40 +498,60 @@ public class GameConstants {
             return enchantSuccessRates[chuc][1];
         }
     }
-
+    //the reason the if is on lvl 150 cuz i want that if this is high end item - SweetWater / AbsoLab (150+) you will get even higher boost as it will be the end game gear
+    //i kept it 150 and not 149 to feel the boost from CRA to Absolab / SweetWater!
+    //as of right now the stats was till 4 star which is weird so i fix it till 25 stars tho i know you can get till 15/20 max (just in case i will boost the star about in the future)
     public static int getStatForSuperiorEnhancement(int reqLevel, short chuc) {
         if (chuc == 0) {
-            return reqLevel < 110 ? 2 : reqLevel <= 150 ? 9 : 19;
+            return reqLevel <= 110 ? 2 : reqLevel <= 150 ? 9 : 19;
         } else if (chuc == 1) {
-            return reqLevel < 110 ? 3 : reqLevel <= 150 ? 10 : 20;
+            return reqLevel <= 110 ? 3 : reqLevel <= 150 ? 10 : 20;
         } else if (chuc == 2) {
-            return reqLevel < 110 ? 5 : reqLevel <= 150 ? 12 : 22;
+            return reqLevel <= 110 ? 5 : reqLevel <= 150 ? 12 : 22;
         } else if (chuc == 3) {
             return reqLevel <= 150 ? 15 : 25;
         } else if (chuc == 4) {
             return reqLevel <= 150 ? 19 : 29;
+        } else if (chuc >= 5) {
+            return reqLevel <= 150 ? 20 : 35;
         }
-        return 0;
+        return 0; //to null the option of null pointer exception
     }
-    //as i can see you dont have an option for an equips thats are higher then lvl 150
+    //look like they became lazy half way so start to chain the ifs, and it's doesn't work so let's do it the hard way!
+    //another thing is that only from 5 stars they give you atk, as of right now i think thats not right for end-game gear so i changing it to be from 1st star
     public static int getAttForSuperiorEnhancement(int reqLevel, short chuc) {
-        if (chuc == 5) {
+        if (chuc <= 1) { //switch to <= for a possibility of 0 stars (start)
             return reqLevel <= 150 ? 5 : 9;
-        } else if (chuc == 6) {
+        } else if (chuc == 2) {
             return reqLevel <= 150 ? 6 : 10;
-        } else if (chuc == 7) {
+        } else if (chuc == 3) {
             return reqLevel <= 150 ? 7 : 11;
-        } else {
+        } else if (chuc == 4) {
+            return reqLevel <= 150 ? 7 : 11;
+        } else if (chuc >= 10) {
+            return reqLevel <= 150 ? 10 : 15;
+        } else if (chuc >= 15) {
+            return reqLevel <= 150 ? 15 : 20;
+        } else if (chuc >= 20) {
+            return reqLevel <= 150 ? 17 : 25;
+        } else if (chuc >= 25) {
+            return reqLevel <= 150 ? 20 : 30;
+        }
+        /* the original else which wasn't working!
+        else {
             return chuc == 8 ? 12 : chuc == 9 ? 13 : chuc == 10 ? 15 : chuc == 11 ? 17 : chuc == 12 ? 19 : chuc == 13 ? 21 : chuc == 14 ? 23 : 0;
         }
+
+         */
+        return 0; //to null the option of null pointer exception
     }
-    //for my understanding chuc is the amout of starforce?
-    // ugliest function in swordie
+    //for my understanding chuc is the amout of starforce
+    // the purpose of this function is to give stat's to items that are not end gear
     public static int getEquipStatBoost(Equip equip, EnchantStat es, short chuc) {
         int stat = 0;
         // hp/mp
         if (es == EnchantStat.MHP || es == EnchantStat.MMP) {
-            stat += chuc <= 2 ? 50 : chuc <= 4 ? 100 : chuc <= 6 ? 150 : chuc <= 8 ? 200 : chuc <= 14 ? 250 : 0;
+            stat += chuc <= 2 ? 50 : chuc <= 4 ? 100 : chuc <= 6 ? 150 : chuc <= 8 ? 200 : chuc <= 14 ? 250 : 0; //this conditions don't work so i will write it propely
         }
         int reqLevel = equip.getrLevel() + equip.getiIncReq();
         // all stat
@@ -541,33 +561,34 @@ public class GameConstants {
             } else if (chuc <= 9) {
                 stat += 10;
             }else if (chuc <= 14) {
-                stat += 3;
-            } else if (chuc <= 21) {
+                stat += 15;
+            } else if (chuc <= 25) {
                 stat += reqLevel <= 137 ? 7 : reqLevel <= 149 ? 9 : reqLevel <= 159 ? 11 : reqLevel <= 199 ? 13 : 15;
             }
         }
         // att for all equips
-        if ((es == EnchantStat.PAD || es == EnchantStat.MAD) && chuc >= 15) {
-            if (chuc == 5) {
-                stat += reqLevel <= 137 ? 6 : reqLevel <= 149 ? 7 : reqLevel <= 159 ? 8 : reqLevel <= 199 ? 9 : 12;
+        //for some unknown reason the original code had the max reqlvl to be 199 even tho going to be arcane which is 200 so i plan a head of time
+        if (es == EnchantStat.PAD || es == EnchantStat.MAD) { //i canceled the from +5 stars part because for weird reason some weapons don't count in the weapon part so lets be sure every equip get some atk at least
+            if (chuc <= 5) {
+                stat += reqLevel <= 137 ? 6 : reqLevel <= 149 ? 7 : reqLevel <= 159 ? 8 : reqLevel <= 200 ? 9 : 12;
             } else if (chuc == 6) {
-                stat += reqLevel <= 137 ? 7 : reqLevel <= 149 ? 8 : reqLevel <= 159 ? 9 : reqLevel <= 199 ? 9 : 13;
+                stat += reqLevel <= 137 ? 7 : reqLevel <= 149 ? 8 : reqLevel <= 159 ? 9 : reqLevel <= 200 ? 9 : 13;
             } else if (chuc == 7) {
-                stat += reqLevel <= 137 ? 7 : reqLevel <= 149 ? 8 : reqLevel <= 159 ? 9 : reqLevel <= 199 ? 10 : 14;
+                stat += reqLevel <= 137 ? 7 : reqLevel <= 149 ? 8 : reqLevel <= 159 ? 9 : reqLevel <= 200 ? 10 : 14;
             } else if (chuc == 8) {
-                stat += reqLevel <= 137 ? 8 : reqLevel <= 149 ? 9 : reqLevel <= 159 ? 10 : reqLevel <= 199 ? 11 : 14;
+                stat += reqLevel <= 137 ? 8 : reqLevel <= 149 ? 9 : reqLevel <= 159 ? 10 : reqLevel <= 200 ? 11 : 14;
             } else if (chuc == 9) {
-                stat += reqLevel <= 137 ? 9 : reqLevel <= 149 ? 10 : reqLevel <= 159 ? 11 : reqLevel <= 199 ? 12 : 15;
+                stat += reqLevel <= 137 ? 9 : reqLevel <= 149 ? 10 : reqLevel <= 159 ? 11 : reqLevel <= 200 ? 12 : 15;
             } else if (chuc == 10) {
-                stat += reqLevel <= 149 ? 11 : reqLevel <= 159 ? 12 : reqLevel <= 199 ? 13 : 16;
+                stat += reqLevel <= 149 ? 11 : reqLevel <= 159 ? 12 : reqLevel <= 200 ? 13 : 16;
             } else if (chuc == 11) {
-                stat += reqLevel <= 149 ? 12 : reqLevel <= 159 ? 13 : reqLevel <= 199 ? 14 : 17;
+                stat += reqLevel <= 149 ? 12 : reqLevel <= 159 ? 13 : reqLevel <= 200 ? 14 : 17;
             } else if (chuc == 12) {
-                stat += reqLevel <= 149 ? 17 : reqLevel <= 159 ? 18 : reqLevel <= 199 ? 19 : 21;
+                stat += reqLevel <= 149 ? 17 : reqLevel <= 159 ? 18 : reqLevel <= 200 ? 19 : 21;
             } else if (chuc == 13) {
-                stat += reqLevel <= 149 ? 19 : reqLevel <= 159 ? 20 : reqLevel <= 199 ? 21 : 23;
+                stat += reqLevel <= 149 ? 19 : reqLevel <= 159 ? 20 : reqLevel <= 200 ? 21 : 23;
             } else if (chuc >= 14) {
-                stat += reqLevel <= 149 ? 21 : reqLevel <= 159 ? 22 : reqLevel <= 199 ? 23 : 25;
+                stat += reqLevel <= 149 ? 21 : reqLevel <= 159 ? 22 : reqLevel <= 200 ? 23 : 25;
             }
         }
         // att gains for weapons
@@ -578,18 +599,31 @@ public class GameConstants {
                 } else if (es == EnchantStat.MAD) {
                     stat += equip.getiMad() * 0.02;
                 }
-            }else if (chuc <= 10) {
+            }else if (chuc <= 10) { //apperantly 0.2 it abit much for such a low cost so i going to move this part to the 10-15 stars which really hard to get in the end of the day!
+                if (es == EnchantStat.PAD) {
+                    stat += equip.getiPad() * 0.1;
+                } else if (es == EnchantStat.MAD) {
+                    stat += equip.getiMad() * 0.1;
+                }
+            } else if (chuc <= 15) {
                 if (es == EnchantStat.PAD) {
                     stat += equip.getiPad() * 0.2;
                 } else if (es == EnchantStat.MAD) {
                     stat += equip.getiMad() * 0.2;
                 }
-            } else if (es == EnchantStat.PAD || es == EnchantStat.MAD) {
+            } else if (chuc <= 25) { //switch the old else to just covering all the possibilities, much easier to understand even if it's less efficient
+                if (es == EnchantStat.PAD) {
+                    stat += equip.getiPad() * 0.3;
+                } else if (es == EnchantStat.MAD) {
+                    stat += equip.getiMad() * 0.3;
+                }
+            }
+            /*else if (es == EnchantStat.PAD || es == EnchantStat.MAD) {
                 stat += chuc == 22 ? 13 : chuc == 23 ? 12 : chuc == 24 ? 11 : 0;
                 if (reqLevel == 200 && chuc == 15) {
                     stat += 1;
                 }
-            }
+            }*/
         }
         // att gain for gloves, enhancements 4/6/8/10 and 12-14
         if (ItemConstants.isGlove(equip.getItemId()) && (es == EnchantStat.PAD || es == EnchantStat.MAD)) {

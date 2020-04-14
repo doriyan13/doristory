@@ -457,10 +457,11 @@ public class ItemHandler {
                 }
                 inPacket.decodeInt();
                 inPacket.decodeInt();
-                boolean safeGuard = false;
-                if (equip.canSafeguardHyperUpgrade()) {
+                boolean safeGuard = false; //will always be false for the sake of it, you need to keep this int because alot of the functions depends on it even tho in the idea you never going to be able to destroy a item in my server!
+                /*if (equip.canSafeguardHyperUpgrade()) {
                     safeGuard = inPacket.decodeByte() != 0;
                 }
+                 */
                 boolean equippedInv = eqpPos < 0;
                 inv = equippedInv ? chr.getEquippedInventory() : chr.getEquipInventory();
                 equip = (Equip) inv.getItemBySlot(Math.abs(eqpPos));
@@ -572,10 +573,11 @@ public class ItemHandler {
                 inv = ePos < 0 ? chr.getEquippedInventory() : chr.getEquipInventory();
                 ePos = Math.abs(ePos);
                 equip = (Equip) inv.getItemBySlot(ePos);
-                safeGuard = false;
-                if (equip.canSafeguardHyperUpgrade()) {
+               //i disabled the destroy function in the game cuz i hate it so that part isn't needed anymore - also this part really buggy!
+                //safeGuard = false;
+                /*if (equip.canSafeguardHyperUpgrade()) {
                     safeGuard = inPacket.decodeByte() != 0;
-                }
+                }*/
                 if (equip == null || equip.hasSpecialAttribute(EquipSpecialAttribute.Vestige) || !ItemConstants.isUpgradable(equip.getItemId())) {
                     chr.getOffenseManager().addOffense(String.format("Character %d tried to enchant a non-enchantable equip (pos %d, itemid %d).",
                             chr.getId(), ePos, equip == null ? 0 : equip.getItemId()));
@@ -584,9 +586,10 @@ public class ItemHandler {
                 }
                 cost = GameConstants.getEnchantmentMesoCost(equip.getrLevel() + equip.getiIncReq(), equip.getChuc(), equip.isSuperiorEqp());
                 destroyProp = GameConstants.getEnchantmentDestroyRate(equip);
-                if (safeGuard && equip.canSafeguardHyperUpgrade()) {
+                //i disabled the destroy function in the game cuz i hate it so that part isn't needed anymore - also this part really buggy!
+                /*if (safeGuard && equip.canSafeguardHyperUpgrade()) {
                     cost *= 2;
-                }
+                }*/
                 //this function in charge of the text display in the starforce window - after the 'beforeMVP:0 , the parm is the success rate shown, there was a unknown reason that was defined 0.
                 c.write(FieldPacket.hyperUpgradeDisplay(equip, equip.isSuperiorEqp() ? equip.getChuc() > 0 : equip.getChuc() > 5 && equip.getChuc() % 5 != 0,
                         cost, 0, GameConstants.getEnchantmentSuccessRate(equip), 0,  equip.getDropStreak() >= 2));
