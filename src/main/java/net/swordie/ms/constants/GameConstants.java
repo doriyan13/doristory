@@ -21,7 +21,7 @@ import java.util.List;
 public class GameConstants {
     public static final int CHANNELS_PER_WORLD = 10;
     public static final int BUFFED_CHANNELS = 7;
-    public static final int MOB_EXP_RATE = 1; //was 10
+    public static final int MOB_EXP_RATE = 3; //was 10
     public static final long MAX_MONEY = 9_999_999_999L;
     public static final short DAMAGE_SKIN_MAX_SIZE = 100;
     public static final int MAX_PET_AMOUNT = 3;
@@ -45,7 +45,7 @@ public class GameConstants {
 
     // Drop
     public static final int DROP_HEIGHT = 20; // was 20
-    public static final int DROP_DIFF = 25;
+    public static final int DROP_DIFF = 25; //was 25, hmmm
     public static final int DROP_REMAIN_ON_GROUND_TIME = 120; // 2 minutes
     public static final int DROP_REMOVE_OWNERSHIP_TIME = 30; // 30 sec
     public static final int MIN_MONEY_MULT = 60;// was 6
@@ -377,9 +377,9 @@ public class GameConstants {
 
                 {300, 0}, //70
                 {300, 0}, //70
-                {30, 0}, //194
-                {20, 0}, //294
-                {10, 0}, //396
+                {300, 0}, //194
+                {200, 0}, //294
+                {100, 0}, //396
         };
     }
 
@@ -391,17 +391,17 @@ public class GameConstants {
                 {400, 0},
                 {400, 0},
 
-                {400, 18},
-                {400, 30},
-                {400, 42},
-                {400, 60},
-                {370, 95},
+                {400, 0}, //18
+                {400, 0}, //30
+                {400, 0}, //42
+                {400, 0}, //60
+                {370, 0}, //95
 
-                {350, 130},
-                {350, 162},
-                {30, 485},
-                {20, 490},
-                {10, 500},
+                {350, 0}, //130
+                {350, 0}, //162
+                {300, 0}, //485
+                {200, 0}, //490
+                {100, 0}, //500
         };
     }
 
@@ -429,6 +429,54 @@ public class GameConstants {
             return 1000;
         }
         int chuc = equip.getChuc();
+        if(chuc < 0) { //if i get a null for some reason
+            return 0;
+        }
+        //first 5 stars (going to the 6th) -
+        else if (chuc == 0) {
+            return 950;
+        } else if (chuc == 1) {
+            return 900;
+        } else if (chuc >1 && chuc <3) {
+            return 850;
+        } else if (chuc == 4) {
+            return 800;
+        } else if (chuc == 5) {
+            return 750;
+        }
+        //second set of stars (10 - going to 11th) -
+        else if (chuc == 6) {
+            return 700;
+        } else if (chuc == 7) {
+            return 650;
+        } else if (chuc == 8) {
+            return 600;
+        } else if (chuc == 9) {
+            return 550;
+        } else if (chuc == 10) {
+            return 450;
+        }
+        //last 2 sets - 15 till 25 -
+        else if (chuc == 11) {
+            return 350;
+        }  else if (chuc > 11 && chuc < 24) {
+            return 300;
+        } else if (chuc == 24) {
+            return 200;
+        }  else if (chuc > 24) {
+            return 100;
+        }
+         else if (equip.isSuperiorEqp()) {
+            return enchantSuccessRatesSuperior[chuc][0];
+        } else {
+            return enchantSuccessRates[chuc][0];
+        }
+    }
+    /* getEnchantmentSuccessRate - original code
+     if (equip.getDropStreak() >= 2) {
+            return 1000;
+        }
+        int chuc = equip.getChuc();
         if(chuc < 0 || chuc > 24) {
             return 0;
         } else if (equip.isSuperiorEqp()) {
@@ -436,8 +484,7 @@ public class GameConstants {
         } else {
             return enchantSuccessRates[chuc][0];
         }
-    }
-
+     */
     public static int getEnchantmentDestroyRate(Equip equip) {
         if (equip.getDropStreak() >= 2) {
             return 0;
