@@ -590,7 +590,7 @@ public class ItemHandler {
                 //this function in charge of the text display in the starforce window - after the 'beforeMVP:0 , the parm is the success rate shown, there was a unknown reason that was defined 0.
                 c.write(FieldPacket.hyperUpgradeDisplay(equip, equip.isSuperiorEqp() ? equip.getChuc() > 0 : equip.getChuc() > 5 && equip.getChuc() % 5 != 0,
                         cost, 0, GameConstants.getEnchantmentSuccessRate(equip), 0,  equip.getDropStreak() >= 2));
-                /*
+                /* //this is the old code:
                 c.write(FieldPacket.hyperUpgradeDisplay(equip, equip.isSuperiorEqp() ? equip.getChuc() > 0 : equip.getChuc() > 5 && equip.getChuc() % 5 != 0,
                         cost, 0, 0, GameConstants.getEnchantmentSuccessRate(equip),  equip.getDropStreak() >= 2));
                  */
