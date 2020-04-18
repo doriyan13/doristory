@@ -54,4 +54,4 @@ sm.giveItem(5062009, 200) #red cube
 sm.giveItem(1042100, 1) #my nx shirt
 sm.giveItem(1062112, 1) #my nx no pants
 sm.giveItem(1072532, 1) #my nx gold slime shoes
-sm.giveItem(1004109, 1) #trans hat (to see my hair XD
+sm.giveItem(1002186, 1) #trans hat (to see my hair XD
