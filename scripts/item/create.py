@@ -43,9 +43,15 @@ sm.giveItem(1082556, 1) # sweet water glove
 sm.giveItem(1102623, 1) # sweet water cape
 sm.giveItem(1132247, 1) # sweet water belt
 sm.giveItem(1002140, 1) # gm hat
+sm.giveItem(1062007, 1)# gm pants for the effect with nx
 sm.giveItem(5530627, 10) #power elixir 300
 sm.giveItem(4001832, 9999) #spell traces
 sm.giveItem(2049764, 10) #uniqe scroll
 sm.giveItem(1113173, 1) # ring lightning
 sm.giveItem(1112735, 1) # angelic ring
 sm.giveItem(5062009, 200) #red cube
+
+sm.giveItem(1042100, 1) #my nx shirt
+sm.giveItem(1062112, 1) #my nx no pants
+sm.giveItem(1072532, 1) #my nx gold slime shoes
+sm.giveItem(1004109, 1) #trans hat (to see my hair XD
