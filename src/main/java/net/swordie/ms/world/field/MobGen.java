@@ -50,8 +50,8 @@ public class MobGen extends Life {
         if(CustomConstants.AUTO_AGGRO) {
             field.broadcastPacket(MobPool.forceChase(mob.getObjectId(),false));
         }
-
-        setNextPossibleSpawnTime(System.currentTimeMillis() + (getMob().getMobTime() * 1000));
+        //TODO: The spawn rate in the game of mobs?
+        setNextPossibleSpawnTime(System.currentTimeMillis() + (getMob().getMobTime() * 500));
         setHasSpawned(true);
     }
 

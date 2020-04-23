@@ -1411,7 +1411,8 @@ public class Mob extends Life {
             eei.setLastHit(true);
             eei.setIncEXP((int) appliedExpPre);
             chr.addExp(appliedExpPost, eei);
-
+            //TODO: make a more complex Nx drop rate!
+            //caculate the amount of nx the mob will drop
             if (Util.succeedProp(GameConstants.NX_DROP_CHANCE)) {
                 int nx = (int) (damagePerc * getNxDropAmount());
                 chr.addNx(nx);
