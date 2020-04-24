@@ -1895,7 +1895,9 @@ public class Mob extends Life {
         if (getExp() == 0) {
             return 0;
         }
-        double amount = ((Math.sqrt(getMaxHp() / 100D)) * ((double) getMaxHp() / (getExp() * getLevel())));
+        //TODO: Trying out new nx system
+        double amount = (getMaxHp() / 100D) * ((double)getExp()/getLevel());
+        // double amount = ((Math.sqrt(getMaxHp() / 100D)) * ((double) getMaxHp() / (getExp() * getLevel())));
         return (int) (amount + 1);
 
 

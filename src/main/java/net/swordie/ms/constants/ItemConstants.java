@@ -138,7 +138,7 @@ public class ItemConstants {
         initConsumableDrops();
         initEquipDrops();
     }
-
+//TODO: adding consumable drops for monsters per lvl
     private static void initConsumableDrops() {
         consumableDropsPerLevel.put(0, Util.makeSet(
                 new DropInfo(2000046, 200), // Red Potion

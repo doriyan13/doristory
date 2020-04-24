@@ -33,8 +33,6 @@ import net.swordie.ms.world.field.Field;
 import net.swordie.ms.world.field.fieldeffect.FieldEffect;
 import org.apache.log4j.Logger;
 
-import static net.swordie.ms.enums.ChatType.Mob;
-
 public class AttackHandler {
 
     private static final Logger log = Logger.getLogger(AttackHandler.class);
@@ -612,7 +610,6 @@ public class AttackHandler {
             }
             if (skillID == 101120104) {
                 // CUser::EncodeAdvancedEarthBreak
-                // TODO
             }
             if (skillID == 14111006 && ai.grenadeId != 0) {
                 ai.grenadePos.setX(inPacket.decodeShort());

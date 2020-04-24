@@ -212,7 +212,7 @@ public class JobConstants {
     public static boolean isSuperGm(short id) {
         return id == JobEnum.SUPERGM.getJobId();
     }
-
+    //TODO: ALL The job ids!
     public enum JobEnum {
         BEGINNER(0, 0),
         WARRIOR(100, 0),
