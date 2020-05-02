@@ -138,34 +138,48 @@ public class ItemConstants {
         initConsumableDrops();
         initEquipDrops();
     }
-
+//TODO: adding consumable drops for monsters per lvl
     private static void initConsumableDrops() {
         consumableDropsPerLevel.put(0, Util.makeSet(
                 new DropInfo(2000046, 200), // Red Potion
-                new DropInfo(2000014, 200)  // Blue Potion
+                new DropInfo(2000014, 200),  // Blue Potion
+                new DropInfo(5530360, 10),  // Bonus Potential Scroll (regular rare)
+                new DropInfo(5062009, 10) // Red Cube
         ));
         consumableDropsPerLevel.put(20, Util.makeSet(
                 new DropInfo(2000002, 200), // White Potion
-                new DropInfo(2000006, 200)  // Mana Elixir
+                new DropInfo(2000006, 200),  // Mana Elixir
+                new DropInfo(5530360, 10),  // Bonus Potential Scroll (regular rare)
+                new DropInfo(5062009, 10) // Red Cube
         ));
         consumableDropsPerLevel.put(40, Util.makeSet(
                 new DropInfo(2001527, 200), // Unagi
-                new DropInfo(2022000, 200)  // Pure Water
+                new DropInfo(2022000, 200),  // Pure Water
+                new DropInfo(5530360, 10),  // Bonus Potential Scroll (regular rare)
+                new DropInfo(5062009, 10) // Red Cube
         ));
         consumableDropsPerLevel.put(60, Util.makeSet(
                 new DropInfo(2001527, 200), // Unagi
-                new DropInfo(2022000, 200)  // Pure Water
+                new DropInfo(2022000, 200),  // Pure Water
+                new DropInfo(5530360, 10),  // Bonus Potential Scroll (regular rare)
+                new DropInfo(5062009, 10) // Red Cube
         ));
         consumableDropsPerLevel.put(80, Util.makeSet(
                 new DropInfo(2001001, 200), // Ice Cream Pop
-                new DropInfo(2001002, 200)  // Pure Water
+                new DropInfo(2001002, 200),  // Pure Water
+                new DropInfo(5530360, 10),  // Bonus Potential Scroll (regular rare)
+                new DropInfo(5062009, 10) // Red Cube
         ));
         consumableDropsPerLevel.put(100, Util.makeSet(
                 new DropInfo(2020012, 100), // Melting Cheese
                 new DropInfo(2020013, 100), // Reindeer Milk
                 new DropInfo(2020014, 100), // Sunrise Dew
                 new DropInfo(2020015, 100), // Sunset Dew
-                new DropInfo(2050004, 10)   // All Cure
+                new DropInfo(2050004, 20),   // All Cure
+                new DropInfo(2000005 , 100), //Power Elixir
+                new DropInfo(5530360, 10),  // Bonus Potential Scroll (regular rare)
+                new DropInfo(5062009, 10), // Red Cube
+                new DropInfo(2048723, 10) // eternal flame - put it low cuz i want it to be a challange to get them!
         ));
     }
 
@@ -182,7 +196,12 @@ public class ItemConstants {
                 jobMap.put(level, new HashSet<>());
             }
             Set<DropInfo> set = jobMap.get(level);
-            set.add(new DropInfo(drop.getId(), 100));
+
+            if (level >= 150) {
+                set.add(new DropInfo(drop.getId(), 20));
+            } else{
+                set.add(new DropInfo(drop.getId(), 100));
+            }
         }
     }
 
@@ -1368,7 +1387,7 @@ public class ItemConstants {
             case 1102623: // Sweetwater Cape
             case 1132247: // Sweetwater Belt
                 if (ServerConstants.VERSION >= 197) {
-                    return 15;
+                    return 15; //was 15
                 }
             case 1182060: // Ghost Ship Exorcist
             case 1182273: // Sengoku Hakase Badge

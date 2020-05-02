@@ -7,6 +7,7 @@ package net.swordie.ms.enums;
 public enum DBChar {
     Character(0x1),
     Money(0x2),
+    //CreditNx(0x3), //trying to add nx display
     ItemSlotEquip(0x4),
     ItemSlotConsume(0x8),
     ItemSlotInstall(0x10),

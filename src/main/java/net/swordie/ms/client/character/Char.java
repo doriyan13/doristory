@@ -268,7 +268,7 @@ public class Char {
 	@Transient
 	private DamageSkinSaveData damageSkin = new DamageSkinSaveData(18, 2433063, false, "Je moeder");
 	@Transient
-	private DamageSkinSaveData premiumDamageSkin = new DamageSkinSaveData();
+	private DamageSkinSaveData premiumDamageSkin = new DamageSkinSaveData(18, 2433063, false, "tester"); //checking maybe it will fix the damage skin display
 	@Transient
 	private boolean partyInvitable;
 	@Transient
@@ -727,6 +727,9 @@ public class Char {
 		if (mask.isInMask(DBChar.Money)) {
 			outPacket.encodeLong(getMoney());
 		}
+		/*if (mask.isInMask(DBChar.CreditNx)) { //trying to implement nx display
+			outPacket.encodeLong(getCreditNx());
+		}*/
 		if (mask.isInMask(DBChar.ItemSlotConsume) || mask.isInMask(DBChar.ExpConsumeItem)) {
 			outPacket.encodeInt(getExpConsumeItems().size());
 			for (ExpConsumeItem eci : getExpConsumeItems()) {
@@ -1556,6 +1559,10 @@ public class Char {
 
 	public long getMoney() {
 		return getAvatarData().getCharacterStat().getMoney();
+	}
+
+	public long getCreditNx() {
+		return getAccount().getNxCredit();
 	}
 
 	public List<ExpConsumeItem> getExpConsumeItems() {
