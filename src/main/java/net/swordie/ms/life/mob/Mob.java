@@ -1308,7 +1308,7 @@ public class Mob extends Life {
 
         reviveMob(getRespawnDelay());
     }
-
+    //TODO: this function is incharge on the drops of mobs: add cubes and much more!
     private void dropDrops() {
         int ownerID = 0;
         Char mostDamageChar = getMostDamageChar();
@@ -1327,6 +1327,8 @@ public class Mob extends Life {
         Set<DropInfo> dropInfoSet = getDrops();
         // Add consumable/equip drops based on min(charLv, mobLv)
         int level = Math.min(mostDamageChar.getLevel(), getForcedMobStat().getLevel());
+        if(level > 150){level = 150;} //if the mob is higher from lvl 150 then switch to 160 so they will still drop equips!
+        //TODO: add contion to 160 equips - Sweetwater & Absolab / implement in bosses
         dropInfoSet.addAll(ItemConstants.getConsumableMobDrops(level));
         dropInfoSet.addAll(ItemConstants.getEquipMobDrops(job, level));
         // DropRate & MesoRate Increases
@@ -1896,8 +1898,8 @@ public class Mob extends Life {
             return 0;
         }
         //TODO: Trying out new nx system
-        double amount = (getMaxHp() / 100D) * ((double)getExp()/getLevel());
-        // double amount = ((Math.sqrt(getMaxHp() / 100D)) * ((double) getMaxHp() / (getExp() * getLevel())));
+        //double amount = (getMaxHp() / 100D) * ((double)getExp()/getLevel()); - the high lvl mobs gave millions of nx!
+        double amount = ((Math.sqrt(getMaxHp() / 100D)) * ((double) getMaxHp() / (getExp() * getLevel())));
         return (int) (amount + 1);
 
 
