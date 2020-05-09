@@ -208,7 +208,12 @@ public class ItemConstants {
         }
     }
     //------------------------------------------------------------------------------------------------------------------
-    //Trying to add droping random Cash items from mobs
+
+    /**
+     * Initiate at the loading of the game - only once!
+     * Taking all the nx items from the CashShopItem DB, filter only weapon, hats, overall, tops, bottoms, gloves, shoes, rings, capes, face, earrings and transparent items
+     * Store all the relavent items in - "nxEquipDrops"
+     */
     private static void initNxEquipDrops() {
         List<CashShopItem> drops = (List<CashShopItem>) DatabaseManager.getObjListFromDB(CashShopItem.class);
         //Set<DropInfo> set = new HashSet<>();
@@ -1487,14 +1492,13 @@ public class ItemConstants {
     //------------------------------------------------------------------------------------------------------------------
 
     /**
-     *
-     * @return nxEquipDrops - HashMap
+     *This Function get called in the Mob->dropDrops()
+     * Taking 1 Random item from the Nx Array i create in "nxEquipDrops"
+     * @return nxEquipDrops - HashMap contains 1 random nx equip
      */
     public static Set<DropInfo> getNxEquipDrops(){
         Random rand = new Random();
         Integer randomElement = rand.nextInt(nxEquipDrops.size());
-
-        Object check = nxEquipDrops.get(randomElement);
 
         return nxEquipDrops.get(randomElement);
     }
