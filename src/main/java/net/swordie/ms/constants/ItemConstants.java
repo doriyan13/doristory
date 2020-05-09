@@ -10,6 +10,7 @@ import net.swordie.ms.loaders.ItemData;
 import net.swordie.ms.loaders.containerclasses.EquipDrop;
 import net.swordie.ms.loaders.containerclasses.ItemInfo;
 import net.swordie.ms.util.Util;
+import net.swordie.ms.world.shop.cashshop.CashShopItem;
 import org.apache.log4j.LogManager;
 
 import java.util.*;
@@ -42,8 +43,8 @@ public class ItemConstants {
 
     static final org.apache.log4j.Logger log = LogManager.getRootLogger();
 
-    public static final int THIRD_LINE_CHANCE = 75; //the chance for a third potentioal line
-    public static final int PRIME_LINE_CHANCE = 75; //the chance for prime line!
+    public static final int THIRD_LINE_CHANCE = 20; //the chance for a third potentioal line
+    public static final int PRIME_LINE_CHANCE = 45; //the chance for prime line!
 
     public static final int HYPER_TELEPORT_ROCK = 5040004;
 
@@ -133,10 +134,12 @@ public class ItemConstants {
     // Self-made drops per mob
     public static final Map<Integer, Set<DropInfo>> consumableDropsPerLevel = new HashMap<>();
     public static final Map<ItemJob, Map<Integer, Set<DropInfo>>> equipDropsPerLevel = new HashMap<>();
+    public static final Map<Integer, Set<DropInfo>> nxEquipDrops = new HashMap<>(); //new addition to try implement random nx drop from mobs
 
     static {
         initConsumableDrops();
         initEquipDrops();
+        initNxEquipDrops();
     }
 //TODO: adding consumable drops for monsters per lvl
     private static void initConsumableDrops() {
@@ -204,7 +207,38 @@ public class ItemConstants {
             }
         }
     }
+    //------------------------------------------------------------------------------------------------------------------
+    //Trying to add droping random Cash items from mobs
+    private static void initNxEquipDrops() {
+        List<CashShopItem> drops = (List<CashShopItem>) DatabaseManager.getObjListFromDB(CashShopItem.class);
+        //Set<DropInfo> set = new HashSet<>();
+        for (CashShopItem drop : drops) {
+            Integer itemID = drop.getItemID();
+            Integer dbID = drop.getId();
+            String nxcategory = drop.getCategory();
+            if(!nxEquipDrops.containsKey(dbID)) {
+                if (nxcategory.equalsIgnoreCase("Weapon") || nxcategory.equalsIgnoreCase("Weapon 2") ||
+                        nxcategory.equalsIgnoreCase("Weapon 3") || nxcategory.equalsIgnoreCase("Hat") ||
+                        nxcategory.equalsIgnoreCase("Hat 2") || nxcategory.equalsIgnoreCase("Hat 3") ||
+                        nxcategory.equalsIgnoreCase("Hat 4") || nxcategory.equalsIgnoreCase("Hat 5") ||
+                        nxcategory.equalsIgnoreCase("Hat 6") || nxcategory.equalsIgnoreCase("Face") ||
+                        nxcategory.equalsIgnoreCase("Earrings") || nxcategory.equalsIgnoreCase("Overall") ||
+                        nxcategory.equalsIgnoreCase("Overall 2") || nxcategory.equalsIgnoreCase("Overall 3") ||
+                        nxcategory.equalsIgnoreCase("Overall 4") || nxcategory.equalsIgnoreCase("Top") ||
+                        nxcategory.equalsIgnoreCase("Top") || nxcategory.equalsIgnoreCase("Top 2") ||
+                        nxcategory.equalsIgnoreCase("Bottom") || nxcategory.equalsIgnoreCase("Bottom 2") ||
+                        nxcategory.equalsIgnoreCase("Shoes") || nxcategory.equalsIgnoreCase("Shoes 2") ||
+                        nxcategory.equalsIgnoreCase("Glove") || nxcategory.equalsIgnoreCase("Ring") ||
+                        nxcategory.equalsIgnoreCase("Ring 2") || nxcategory.equalsIgnoreCase("Cape") ||
+                        nxcategory.equalsIgnoreCase("Cape 2") || nxcategory.equalsIgnoreCase("Transparent")) {
 
+                    //set.add(new DropInfo(id, 100)); //creating a list of all the possible nx equips in the DB
+                    nxEquipDrops.put(dbID, Util.makeSet(new DropInfo(itemID, 10)));
+                }
+            }
+        }
+    }
+    //------------------------------------------------------------------------------------------------------------------
     public static int getGenderFromId(int nItemID) {
         int result;
 
@@ -1450,7 +1484,21 @@ public class ItemConstants {
         }
         return equipDropsPerLevel.getOrDefault(itemJob, new HashMap<>()).getOrDefault(level, new HashSet<>());
     }
+    //------------------------------------------------------------------------------------------------------------------
 
+    /**
+     *
+     * @return nxEquipDrops - HashMap
+     */
+    public static Set<DropInfo> getNxEquipDrops(){
+        Random rand = new Random();
+        Integer randomElement = rand.nextInt(nxEquipDrops.size());
+
+        Object check = nxEquipDrops.get(randomElement);
+
+        return nxEquipDrops.get(randomElement);
+    }
+    //------------------------------------------------------------------------------------------------------------------
     public static boolean isMiuMiuMerchant(int itemID) {
         return itemID == 5450000 || itemID == 5450003 || itemID == 5450007 || itemID == 5450012 || itemID == 5450013 || itemID == 5450004;
     }

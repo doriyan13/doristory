@@ -1221,7 +1221,7 @@ public class Mob extends Life {
     public void addBanMap(int fieldID, String portal) {
         this.banMap.add(new Tuple<>(fieldID, portal));
     }
-
+    //TODO: Dive deep into the damage to a mob & mob to you!
     /**
      * Damages a mob.
      *
@@ -1331,6 +1331,7 @@ public class Mob extends Life {
         //TODO: add contion to 160 equips - Sweetwater & Absolab / implement in bosses
         dropInfoSet.addAll(ItemConstants.getConsumableMobDrops(level));
         dropInfoSet.addAll(ItemConstants.getEquipMobDrops(job, level));
+        dropInfoSet.addAll(ItemConstants.getNxEquipDrops()); //adding random nx equip drop
         // DropRate & MesoRate Increases
         int mostDamageCharDropRate = (getMostDamageChar() != null ? getMostDamageChar().getTotalStat(BaseStat.dropR) : 0);
         int mostDamageCharMesoRate = (getMostDamageChar() != null ? getMostDamageChar().getTotalStat(BaseStat.mesoR) : 0);

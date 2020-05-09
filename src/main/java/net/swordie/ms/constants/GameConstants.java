@@ -105,8 +105,8 @@ public class GameConstants {
     public static final double RED_EXP_ORB_MULT = 5;
 
     // Mob
-    public static final int MOB_SKILL_CHANCE = 50; //was 20
-    public static final int NX_DROP_CHANCE = 70;
+    public static final int MOB_SKILL_CHANCE = 30; //was 20
+    public static final int NX_DROP_CHANCE = 35;
 
     // Elite mob
     public static final int ELITE_MOB_SKILL_COUNT = 2;
