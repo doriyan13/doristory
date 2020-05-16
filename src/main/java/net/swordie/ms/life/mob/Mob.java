@@ -1332,6 +1332,10 @@ public class Mob extends Life {
         dropInfoSet.addAll(ItemConstants.getConsumableMobDrops(level));
         dropInfoSet.addAll(ItemConstants.getEquipMobDrops(job, level));
         dropInfoSet.addAll(ItemConstants.getNxEquipDrops()); //adding random nx equip drop
+        //Boss Drop Loot Pool:
+        if(getTemplateId() == 8800002){
+            dropInfoSet.addAll(ItemConstants.getBossDrops(this));
+        }
         // DropRate & MesoRate Increases
         int mostDamageCharDropRate = (getMostDamageChar() != null ? getMostDamageChar().getTotalStat(BaseStat.dropR) : 0);
         int mostDamageCharMesoRate = (getMostDamageChar() != null ? getMostDamageChar().getTotalStat(BaseStat.mesoR) : 0);
@@ -1349,8 +1353,18 @@ public class Mob extends Life {
                 break;
             }
         }
-        if (!getField().getDropsDisabled())
-            getField().drop(getDrops(), getField().getFootholdById(fhID), getPosition(), ownerID, totalMesoRate, totalDropRate);
+        //Iterator<DropInfo> itr = getDrops().iterator();
+        //while(itr.hasNext()){
+            //Random rand = new Random();
+            //Integer dropSpot = rand.nextInt(5);
+            //Position range = new Position();
+            //range.setY(mostDamageChar.getPosition().getY());
+            //range.setX(mostDamageChar.getPosition().getX() + 3);
+
+            if (!getField().getDropsDisabled()){
+                getField().drop(getDrops(), getField().getFootholdById(fhID),getPosition(), ownerID, totalMesoRate, totalDropRate); //switching getPosition() with range
+            }
+
     }
 
     public Map<Char, Long> getDamageDone() {

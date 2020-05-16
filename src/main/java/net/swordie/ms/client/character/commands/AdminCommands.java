@@ -1009,7 +1009,7 @@ public class AdminCommands {
         }
     }
 
-    @Command(names = {"invincible"}, requiredType = Tester)
+    @Command(names = {"invincible","god"}, requiredType = Tester)
     public static class Invincible extends AdminCommand {
         public static void execute(Char chr, String[] args) {
             chr.setInvincible(!chr.isInvincible());

@@ -5,6 +5,7 @@ import net.swordie.ms.client.character.items.*;
 import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.enums.*;
 import net.swordie.ms.life.drop.DropInfo;
+import net.swordie.ms.life.mob.Mob;
 import net.swordie.ms.life.pet.PetSkill;
 import net.swordie.ms.loaders.ItemData;
 import net.swordie.ms.loaders.containerclasses.EquipDrop;
@@ -135,11 +136,13 @@ public class ItemConstants {
     public static final Map<Integer, Set<DropInfo>> consumableDropsPerLevel = new HashMap<>();
     public static final Map<ItemJob, Map<Integer, Set<DropInfo>>> equipDropsPerLevel = new HashMap<>();
     public static final Map<Integer, Set<DropInfo>> nxEquipDrops = new HashMap<>(); //new addition to try implement random nx drop from mobs
+    public static final Map<Integer, Set<DropInfo>> bossDrops = new HashMap<>(); //new addition to try implement random nx drop from mobs
 
     static {
         initConsumableDrops();
         initEquipDrops();
         initNxEquipDrops();
+        initBossDrops();
     }
 //TODO: adding consumable drops for monsters per lvl
     private static void initConsumableDrops() {
@@ -208,7 +211,62 @@ public class ItemConstants {
         }
     }
     //------------------------------------------------------------------------------------------------------------------
+    /**
+     * Initiate at the loading of the game - only once!
+     * Drop Pool for all the Bosses!
+     * Store all the relavent items in - "bossDrops"
+     */
+    private static void initBossDrops() {
 
+        //Creating an DropInfo (object) Array that going to hold all the Chairs from the HardCoded val's
+        DropInfo[] chairArray = new DropInfo[836];
+        Integer chairId = 3010000;
+        Integer spot = 0;
+
+        while (chairId <= 3010835){
+            chairArray[spot] = new DropInfo(chairId, 10); //i want that chair drop will be rare so it's going to be 1%
+            chairId++;
+            spot++;
+        }
+
+        bossDrops.put(8800002, Util.makeSet(chairArray)); //adding the object Array to the DropPool of the bosses!
+
+        bossDrops.put(8800002, Util.makeSet(
+        new DropInfo(1182060, 500), //Ghost Ship Exorcist Badge
+        new DropInfo(1032084, 500), //Vip Earrings
+        new DropInfo(1132151, 500), //Maple Amethysian Belt
+        new DropInfo(1132154, 500), //Grand Maple Amethysian Belt
+        new DropInfo(1132211, 500), //Tinkerer's Yellow Belt
+        new DropInfo(1132212, 500), //Tinkerer's Green Belt
+        new DropInfo(1132213, 500), //Tinkerer's Blue Belt
+        new DropInfo(1132214, 500), //Tinkerer's Red Belt
+        new DropInfo(1132215, 500), //Tinkerer's Black Belt
+        new DropInfo(1152120, 500), //Tinkerer's Yellow Shoulder Accessory
+        new DropInfo(1152121, 500), //Tinkerer's Green Shoulder Accessory
+        new DropInfo(1152122, 500), //Tinkerer's Blue Shoulder Accessory
+        new DropInfo(1152123, 500), //Tinkerer's Red Shoulder Accessory
+        new DropInfo(1152124, 500), //Tinkerer's Black Shoulder Accessory
+
+        new DropInfo(1022131, 500), //Spectrum Goggles
+        new DropInfo(1022231, 500), //Aquatic Letter Eye Accessory
+
+        new DropInfo(1012292, 500), //Crying Mask
+        new DropInfo(1012293, 500), //Sad Mask
+        new DropInfo(1012294, 500), //Smiling Mask
+        new DropInfo(1012295, 500), //Angry Mask
+        new DropInfo(1012191, 500), //Dual Blade Mask
+        new DropInfo(1012478, 500), //Condensed Power Crystal
+
+        new DropInfo(1113173,10), //Lighting God Ring
+        new DropInfo(1113149,500), //Silver Blossom Ring
+
+        new DropInfo(1152088,500), //Maple Amethysian Shoulder
+        new DropInfo(1152089,500), //Grand Maple Amethysian Shoulder
+        new DropInfo(1152170,500), //Royal Black Metal Shoulder
+        new DropInfo(1152160 ,500) //SweetWater Shoulder
+        ));
+    }
+    //------------------------------------------------------------------------------------------------------------------
     /**
      * Initiate at the loading of the game - only once!
      * Taking all the nx items from the CashShopItem DB, filter only weapon, hats, overall, tops, bottoms, gloves, shoes, rings, capes, face, earrings and transparent items
@@ -238,7 +296,7 @@ public class ItemConstants {
                         nxcategory.equalsIgnoreCase("Cape 2") || nxcategory.equalsIgnoreCase("Transparent")) {
 
                     //set.add(new DropInfo(id, 100)); //creating a list of all the possible nx equips in the DB
-                    nxEquipDrops.put(dbID, Util.makeSet(new DropInfo(itemID, 10)));
+                    nxEquipDrops.put(dbID, Util.makeSet(new DropInfo(itemID, 2)));
                 }
             }
         }
@@ -1490,7 +1548,18 @@ public class ItemConstants {
         return equipDropsPerLevel.getOrDefault(itemJob, new HashMap<>()).getOrDefault(level, new HashSet<>());
     }
     //------------------------------------------------------------------------------------------------------------------
+    /**
+     *This Function get called in the Mob->dropDrops()
+     * Taking the Mob ID and return the relevant Drop pool -> "bossDrops"
+     * @return bossDrops - HashMap contains the array of the drops that relevant to the boss
+     */
+    public static Set<DropInfo> getBossDrops(Mob mob){
 
+        Integer mobId = mob.getTemplateId();
+
+        return bossDrops.get(mobId);
+    }
+    //------------------------------------------------------------------------------------------------------------------
     /**
      *This Function get called in the Mob->dropDrops()
      * Taking 1 Random item from the Nx Array i create in "nxEquipDrops"
