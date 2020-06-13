@@ -157,6 +157,22 @@ public class Mob extends Life {
         respawnDelay = 0;
     }
 
+    /**
+     * This Function will check if the mobId belong to a Boss.
+     * @param mobId - the mob Id.
+     * @return boolean answer - true if the id match a boss id!
+     */
+    public boolean isBoss(Integer mobId){
+        boolean retVal = false;
+        //8800002 - Zakum
+        if(mobId == 8800002){
+            retVal = true;
+        }
+
+
+        return retVal;
+    }
+
     public Mob deepCopy() {
         Mob copy = new Mob(getTemplateId());
         // start life
@@ -1333,7 +1349,7 @@ public class Mob extends Life {
         dropInfoSet.addAll(ItemConstants.getEquipMobDrops(job, level));
         dropInfoSet.addAll(ItemConstants.getNxEquipDrops()); //adding random nx equip drop
         //Boss Drop Loot Pool:
-        if(getTemplateId() == 8800002){
+        if(isBoss(getTemplateId())){
             dropInfoSet.addAll(ItemConstants.getBossDrops(this));
         }
         // DropRate & MesoRate Increases
@@ -1361,8 +1377,19 @@ public class Mob extends Life {
             //range.setY(mostDamageChar.getPosition().getY());
             //range.setX(mostDamageChar.getPosition().getX() + 3);
 
-            if (!getField().getDropsDisabled()){
+            if (!getField().getDropsDisabled() && isBoss(getTemplateId()) == false){
                 getField().drop(getDrops(), getField().getFootholdById(fhID),getPosition(), ownerID, totalMesoRate, totalDropRate); //switching getPosition() with range
+            }
+            else if(!getField().getDropsDisabled() && isBoss(getTemplateId())) {
+                //Creating an array that will hold the quantities of the dedicated item (in the Future will help me to switch amounts for etc / special drops)
+                //int[] quantitys= new int[dropInfoSet.size()];
+                //Iterator<DropInfo> it = dropInfoSet.iterator();
+                //int index = 0;
+                /*while(it.hasNext()) {
+                    quantitys[index] = 1;
+                    index++;
+                }*/
+                getField().customdropItemsLine(getDrops() ,true, 5, getPosition().getX(), getPosition().getY(),1, 300);
             }
 
     }

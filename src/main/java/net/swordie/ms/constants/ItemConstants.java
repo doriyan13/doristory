@@ -222,9 +222,9 @@ public class ItemConstants {
         DropInfo[] chairArray = new DropInfo[836];
         Integer chairId = 3010000;
         Integer spot = 0;
-
+        //TODO: The Drop function don't include the chairs in the drop pool - need to figure out why?
         while (chairId <= 3010835){
-            chairArray[spot] = new DropInfo(chairId, 10); //i want that chair drop will be rare so it's going to be 1%
+            chairArray[spot] = new DropInfo(chairId, 1000); //i want that chair drop will be rare so it's going to be 1%
             chairId++;
             spot++;
         }
@@ -232,38 +232,38 @@ public class ItemConstants {
         bossDrops.put(8800002, Util.makeSet(chairArray)); //adding the object Array to the DropPool of the bosses!
 
         bossDrops.put(8800002, Util.makeSet(
-        new DropInfo(1182060, 500), //Ghost Ship Exorcist Badge
-        new DropInfo(1032084, 500), //Vip Earrings
-        new DropInfo(1132151, 500), //Maple Amethysian Belt
-        new DropInfo(1132154, 500), //Grand Maple Amethysian Belt
-        new DropInfo(1132211, 500), //Tinkerer's Yellow Belt
-        new DropInfo(1132212, 500), //Tinkerer's Green Belt
-        new DropInfo(1132213, 500), //Tinkerer's Blue Belt
-        new DropInfo(1132214, 500), //Tinkerer's Red Belt
-        new DropInfo(1132215, 500), //Tinkerer's Black Belt
-        new DropInfo(1152120, 500), //Tinkerer's Yellow Shoulder Accessory
-        new DropInfo(1152121, 500), //Tinkerer's Green Shoulder Accessory
-        new DropInfo(1152122, 500), //Tinkerer's Blue Shoulder Accessory
-        new DropInfo(1152123, 500), //Tinkerer's Red Shoulder Accessory
-        new DropInfo(1152124, 500), //Tinkerer's Black Shoulder Accessory
+        new DropInfo(1182060, 750), //Ghost Ship Exorcist Badge
+        new DropInfo(1032084, 750), //Vip Earrings
+        new DropInfo(1132151, 750), //Maple Amethysian Belt
+        new DropInfo(1132154, 750), //Grand Maple Amethysian Belt
+        new DropInfo(1132211, 750), //Tinkerer's Yellow Belt
+        new DropInfo(1132212, 750), //Tinkerer's Green Belt
+        new DropInfo(1132213, 750), //Tinkerer's Blue Belt
+        new DropInfo(1132214, 750), //Tinkerer's Red Belt
+        new DropInfo(1132215, 750), //Tinkerer's Black Belt
+        new DropInfo(1152120, 750), //Tinkerer's Yellow Shoulder Accessory
+        new DropInfo(1152121, 750), //Tinkerer's Green Shoulder Accessory
+        new DropInfo(1152122, 750), //Tinkerer's Blue Shoulder Accessory
+        new DropInfo(1152123, 750), //Tinkerer's Red Shoulder Accessory
+        new DropInfo(1152124, 750), //Tinkerer's Black Shoulder Accessory
 
-        new DropInfo(1022131, 500), //Spectrum Goggles
-        new DropInfo(1022231, 500), //Aquatic Letter Eye Accessory
+        new DropInfo(1022131, 850), //Spectrum Goggles
+        new DropInfo(1022231, 850), //Aquatic Letter Eye Accessory
 
-        new DropInfo(1012292, 500), //Crying Mask
-        new DropInfo(1012293, 500), //Sad Mask
-        new DropInfo(1012294, 500), //Smiling Mask
-        new DropInfo(1012295, 500), //Angry Mask
-        new DropInfo(1012191, 500), //Dual Blade Mask
-        new DropInfo(1012478, 500), //Condensed Power Crystal
+        new DropInfo(1012292, 750), //Crying Mask
+        new DropInfo(1012293, 750), //Sad Mask
+        new DropInfo(1012294, 750), //Smiling Mask
+        new DropInfo(1012295, 750), //Angry Mask
+        new DropInfo(1012191, 750), //Dual Blade Mask
+        new DropInfo(1012478, 750), //Condensed Power Crystal
 
         new DropInfo(1113173,10), //Lighting God Ring
-        new DropInfo(1113149,500), //Silver Blossom Ring
+        new DropInfo(1113149,950), //Silver Blossom Ring
 
-        new DropInfo(1152088,500), //Maple Amethysian Shoulder
-        new DropInfo(1152089,500), //Grand Maple Amethysian Shoulder
-        new DropInfo(1152170,500), //Royal Black Metal Shoulder
-        new DropInfo(1152160 ,500) //SweetWater Shoulder
+        new DropInfo(1152088,750), //Maple Amethysian Shoulder
+        new DropInfo(1152089,750), //Grand Maple Amethysian Shoulder
+        new DropInfo(1152170,750), //Royal Black Metal Shoulder
+        new DropInfo(1152160 ,750) //SweetWater Shoulder
         ));
     }
     //------------------------------------------------------------------------------------------------------------------
