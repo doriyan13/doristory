@@ -386,6 +386,16 @@ public class WvsContext {
         return outPacket;
     }
 
+    public static OutPacket setMaplePoints(int amount) {
+        OutPacket outPacket = new OutPacket(OutHeader.MESSAGE);
+
+        outPacket.encodeByte(SET_MAPLE_POINT.getVal());
+        outPacket.encodeInt(amount);
+        outPacket.encodeInt(amount > 0 ? 1 : -1);
+
+        return outPacket;
+    }
+
     /**
      * Returns a net.swordie.ms.connection.packet for messages with the following {@link MessageType}:<br>
      * GENERAL_ITEM_EXPIRE_MESSAGE<br>

@@ -1563,13 +1563,35 @@ public class ItemConstants {
     /**
      *This Function get called in the Mob->dropDrops()
      * Taking 1 Random item from the Nx Array i create in "nxEquipDrops"
-     * @return nxEquipDrops - HashMap contains 1 random nx equip
+     * @return retVal - HashMap contains 1 random nx equip
      */
     public static Set<DropInfo> getNxEquipDrops(){
-        Random rand = new Random();
-        Integer randomElement = rand.nextInt(nxEquipDrops.size());
+        // Define a SetMap that will hold my potential nx drops -
+        Set<DropInfo> retVal = new HashSet<>();
+        // Define a flag that will stop the loop -
+        boolean finFlag = true;
+        // Define a safeStop counter that will avoid infinite loop -
+        byte safeStop = 0;
 
-        return nxEquipDrops.get(randomElement);
+        //System.out.println("Starting the loop -");
+        while (finFlag){
+
+            Random rand = new Random();
+            Integer randomElement = rand.nextInt(nxEquipDrops.size());
+            //System.out.println("rnd num - " + randomElement);
+            if (nxEquipDrops.get(randomElement)!= null && !nxEquipDrops.get(randomElement).isEmpty() && nxEquipDrops.get(randomElement).size() > 0){
+                finFlag = false;
+                retVal.addAll(nxEquipDrops.get(randomElement));
+                //System.out.println("got an item - " +retVal);
+            }
+
+            if (safeStop == 20) {
+                finFlag = false;
+            }
+            //System.out.println("Safe run num: " + safeStop);
+            safeStop++;
+        }
+        return retVal;
     }
     //------------------------------------------------------------------------------------------------------------------
     public static boolean isMiuMiuMerchant(int itemID) {

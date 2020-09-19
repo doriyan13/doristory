@@ -4674,6 +4674,10 @@ public class Char {
 
 	public void addNx(int nx) {
 		getAccount().addNXCredit(nx);
+		getUser().addMaplePoints(nx);
+		WvsContext.setMaplePoints(nx);
+		//this.setStat(Stat.eventPoints, nx);
+		//getAvatarData().getCharacterStat().setWp(nx);
 		chatScriptMessage("You have gained " + nx + " NX.");
 	}
 

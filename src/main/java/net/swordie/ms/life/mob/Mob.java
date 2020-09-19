@@ -1347,7 +1347,12 @@ public class Mob extends Life {
         //TODO: add contion to 160 equips - Sweetwater & Absolab / implement in bosses
         dropInfoSet.addAll(ItemConstants.getConsumableMobDrops(level));
         dropInfoSet.addAll(ItemConstants.getEquipMobDrops(job, level));
-        dropInfoSet.addAll(ItemConstants.getNxEquipDrops()); //adding random nx equip drop
+
+        if (ItemConstants.getNxEquipDrops()!= null && ItemConstants.getNxEquipDrops().size()>0) {
+            // If i get an item then add it to the pool -
+            dropInfoSet.addAll(ItemConstants.getNxEquipDrops()); //adding random nx equip drop
+        }
+
         //Boss Drop Loot Pool:
         if(isBoss(getTemplateId())){
             dropInfoSet.addAll(ItemConstants.getBossDrops(this));
@@ -1460,6 +1465,7 @@ public class Mob extends Life {
             if (Util.succeedProp(GameConstants.NX_DROP_CHANCE)) {
                 int nx = (int) (damagePerc * getNxDropAmount());
                 chr.addNx(nx);
+                getField().broadcastPacket(WvsContext.setMaplePoints(chr.getUser().getMaplePoints()));
             }
 
             Party party = chr.getParty();

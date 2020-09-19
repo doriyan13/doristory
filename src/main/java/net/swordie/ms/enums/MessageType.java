@@ -46,7 +46,7 @@ public enum MessageType {
     COLLECTION_RECORD_MESSAGE(40),
     RANDOM_CHANCE_MESSAGE(41),
     UNK(42),
-
+    SET_MAPLE_POINT(43),
     ;
 
     private byte val;
