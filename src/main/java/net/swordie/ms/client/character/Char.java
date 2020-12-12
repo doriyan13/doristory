@@ -4675,6 +4675,7 @@ public class Char {
 	public void addNx(int nx) {
 		getAccount().addNXCredit(nx);
 		getUser().addMaplePoints(nx);
+		getClient().write(WvsContext.setMaplePoints(getUser().getMaplePoints()));
 		WvsContext.setMaplePoints(nx);
 		//this.setStat(Stat.eventPoints, nx);
 		//getAvatarData().getCharacterStat().setWp(nx);

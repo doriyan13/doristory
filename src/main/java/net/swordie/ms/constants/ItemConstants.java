@@ -1483,16 +1483,16 @@ public class ItemConstants {
             case 1082556: // Sweetwater Gloves
             case 1102623: // Sweetwater Cape
             case 1132247: // Sweetwater Belt
-                if (ServerConstants.VERSION >= 197) {
+                if (ServerConstants.VERSION >= 176) { //197
                     return 15; //was 15
                 }
             case 1182060: // Ghost Ship Exorcist
             case 1182273: // Sengoku Hakase Badge
-                if (ServerConstants.VERSION >= 199) {
+                if (ServerConstants.VERSION >= 176) { // >=199
                     return 22;
                 }
         }
-        return ServerConstants.VERSION >= 197 ? 25 : 15;
+        return ServerConstants.VERSION >= 176 ? 25 : 15; //>=197
     }
 
     public static int getEquippedSummonSkillItem(int itemID, short job) {

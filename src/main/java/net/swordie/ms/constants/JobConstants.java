@@ -212,6 +212,9 @@ public class JobConstants {
     public static boolean isSuperGm(short id) {
         return id == JobEnum.SUPERGM.getJobId();
     }
+
+    public static boolean isManager(short id) { return id == JobEnum.MANAGER.getJobId(); }
+
     //TODO: ALL The job ids!
     public enum JobEnum {
         BEGINNER(0, 0),
@@ -893,7 +896,7 @@ public class JobConstants {
     }
 
     public static boolean isExtendSpJob(short jobId) {
-        return !isBeastTamer(jobId) && !isPinkBean(jobId);
+        return !isBeastTamer(jobId) && !isPinkBean(jobId) && !isGmJob(jobId) && !isManager(jobId);
     }
 
     public static boolean isDemon(short jobId) {
