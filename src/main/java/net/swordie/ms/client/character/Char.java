@@ -129,27 +129,27 @@ public class Char {
 
 	@JoinColumn(name = "equippedInventory")
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private Inventory equippedInventory = new Inventory(EQUIPPED, 52);
+	private Inventory equippedInventory = new Inventory(EQUIPPED, 96);
 
 	@JoinColumn(name = "equipInventory")
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private Inventory equipInventory = new Inventory(EQUIP, 52);
+	private Inventory equipInventory = new Inventory(EQUIP, 96);
 
 	@JoinColumn(name = "consumeInventory")
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private Inventory consumeInventory = new Inventory(InvType.CONSUME, 52);
+	private Inventory consumeInventory = new Inventory(InvType.CONSUME, 96);
 
 	@JoinColumn(name = "etcInventory")
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private Inventory etcInventory = new Inventory(InvType.ETC, 52);
+	private Inventory etcInventory = new Inventory(InvType.ETC, 96);
 
 	@JoinColumn(name = "installInventory")
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private Inventory installInventory = new Inventory(InvType.INSTALL, 52);
+	private Inventory installInventory = new Inventory(InvType.INSTALL, 96);
 
 	@JoinColumn(name = "cashInventory")
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private Inventory cashInventory = new Inventory(InvType.CASH, 52);
+	private Inventory cashInventory = new Inventory(InvType.CASH, 96);
 
 	@JoinColumn(name = "avatarData")
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -4674,6 +4674,11 @@ public class Char {
 
 	public void addNx(int nx) {
 		getAccount().addNXCredit(nx);
+		getUser().addMaplePoints(nx);
+		getClient().write(WvsContext.setMaplePoints(getUser().getMaplePoints()));
+		WvsContext.setMaplePoints(nx);
+		//this.setStat(Stat.eventPoints, nx);
+		//getAvatarData().getCharacterStat().setWp(nx);
 		chatScriptMessage("You have gained " + nx + " NX.");
 	}
 
@@ -5007,8 +5012,6 @@ public class Char {
 		return options;
 	}
 
-
-
 	public int getStatAmountSetEffect(BaseStat baseStat) {
 		int amount = 0;
 		Map<ScrollStat, Integer> stats = getStatsBySetEffects();
@@ -5030,5 +5033,56 @@ public class Char {
 		}
 
 		return amount;
+	}
+
+	/**
+	 * Maxing the skills lvl, can only be used in change job.
+	 */
+	public void maxSkills(){
+		List<Skill> list = new ArrayList<>();
+		Set<Short> jobs = new HashSet<>();
+		short job = this.getJob();
+		// TODO add evan checks
+		// giant hack, but it's for a command, so it's k
+		if (job % 100 == 12 || job % 100 == 32 || job % 100 == 72) {
+			jobs.add(job);
+			jobs.add((short) (job - 1));
+			jobs.add((short) (job - 2));
+			jobs.add((short) (job - 12));
+		} else if (job % 100 == 11) {
+			jobs.add(job);
+			jobs.add((short) (job - 1));
+			jobs.add((short) (job - 11));
+		} else if (job % 100 == 10) {
+			jobs.add(job);
+			jobs.add((short) (job - 10));
+		}else if (job % 100 == 34) {
+			jobs.add(job);
+			jobs.add((short) (job - 1));
+			jobs.add((short) (job - 2));
+			jobs.add((short) (job - 3));
+			jobs.add((short) (job - 4));
+			jobs.add((short) (job - 14));
+		}else if (job % 100 == 18) {
+			jobs.add(job);
+			jobs.add((short) (job - 4));
+			jobs.add((short) (job - 6));
+			jobs.add((short) (job - 8));
+			jobs.add((short) (job - 17));
+		}else {
+			jobs.add(job);
+		}
+		for (short j : jobs) {
+			for (Skill skill : SkillData.getSkillsByJob(j)) {
+				byte maxLevel = (byte) skill.getMaxLevel();
+				skill.setCurrentLevel(maxLevel);
+				skill.setMasterLevel(maxLevel);
+				list.add(skill);
+				this.addSkill(skill);
+			}
+			if (list.size() > 0) {
+				this.getClient().write(WvsContext.changeSkillRecordResult(list, true, false, false, false));
+			}
+		}
 	}
 }

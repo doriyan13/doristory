@@ -387,6 +387,17 @@ public class WvsContext {
     }
 
     /**
+     * Adding the ability to add maplePoints to account
+     * @param amount - amount of nx to add.
+     * @return - the packet you need to add.
+     */
+    public static OutPacket setMaplePoints(int amount) {
+        OutPacket outPacket = new OutPacket(OutHeader.SET_MAPLE_POINT);
+        outPacket.encodeInt(amount);
+        return outPacket;
+    }
+
+    /**
      * Returns a net.swordie.ms.connection.packet for messages with the following {@link MessageType}:<br>
      * GENERAL_ITEM_EXPIRE_MESSAGE<br>
      * ITEM_PROTECT_EXPIRE_MESSAGE<br>

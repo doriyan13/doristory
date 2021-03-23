@@ -5,11 +5,13 @@ import net.swordie.ms.client.character.items.*;
 import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.enums.*;
 import net.swordie.ms.life.drop.DropInfo;
+import net.swordie.ms.life.mob.Mob;
 import net.swordie.ms.life.pet.PetSkill;
 import net.swordie.ms.loaders.ItemData;
 import net.swordie.ms.loaders.containerclasses.EquipDrop;
 import net.swordie.ms.loaders.containerclasses.ItemInfo;
 import net.swordie.ms.util.Util;
+import net.swordie.ms.world.shop.cashshop.CashShopItem;
 import org.apache.log4j.LogManager;
 
 import java.util.*;
@@ -42,8 +44,8 @@ public class ItemConstants {
 
     static final org.apache.log4j.Logger log = LogManager.getRootLogger();
 
-    public static final int THIRD_LINE_CHANCE = 75; //the chance for a third potentioal line
-    public static final int PRIME_LINE_CHANCE = 75; //the chance for prime line!
+    public static final int THIRD_LINE_CHANCE = 20; //the chance for a third potentioal line
+    public static final int PRIME_LINE_CHANCE = 45; //the chance for prime line!
 
     public static final int HYPER_TELEPORT_ROCK = 5040004;
 
@@ -133,10 +135,14 @@ public class ItemConstants {
     // Self-made drops per mob
     public static final Map<Integer, Set<DropInfo>> consumableDropsPerLevel = new HashMap<>();
     public static final Map<ItemJob, Map<Integer, Set<DropInfo>>> equipDropsPerLevel = new HashMap<>();
+    public static final Map<Integer, Set<DropInfo>> nxEquipDrops = new HashMap<>(); //new addition to try implement random nx drop from mobs
+    public static final Map<Integer, Set<DropInfo>> bossDrops = new HashMap<>(); //new addition to try implement random nx drop from mobs
 
     static {
         initConsumableDrops();
         initEquipDrops();
+        initNxEquipDrops();
+        initBossDrops();
     }
 //TODO: adding consumable drops for monsters per lvl
     private static void initConsumableDrops() {
@@ -204,7 +210,98 @@ public class ItemConstants {
             }
         }
     }
+    //------------------------------------------------------------------------------------------------------------------
+    /**
+     * Initiate at the loading of the game - only once!
+     * Drop Pool for all the Bosses!
+     * Store all the relavent items in - "bossDrops"
+     */
+    private static void initBossDrops() {
 
+        //Creating an DropInfo (object) Array that going to hold all the Chairs from the HardCoded val's
+        DropInfo[] chairArray = new DropInfo[836];
+        Integer chairId = 3010000;
+        Integer spot = 0;
+        //TODO: The Drop function don't include the chairs in the drop pool - need to figure out why?
+        while (chairId <= 3010835){
+            chairArray[spot] = new DropInfo(chairId, 1000); //i want that chair drop will be rare so it's going to be 1%
+            chairId++;
+            spot++;
+        }
+
+        bossDrops.put(8800002, Util.makeSet(chairArray)); //adding the object Array to the DropPool of the bosses!
+
+        bossDrops.put(8800002, Util.makeSet(
+        new DropInfo(1182060, 750), //Ghost Ship Exorcist Badge
+        new DropInfo(1032084, 750), //Vip Earrings
+        new DropInfo(1132151, 750), //Maple Amethysian Belt
+        new DropInfo(1132154, 750), //Grand Maple Amethysian Belt
+        new DropInfo(1132211, 750), //Tinkerer's Yellow Belt
+        new DropInfo(1132212, 750), //Tinkerer's Green Belt
+        new DropInfo(1132213, 750), //Tinkerer's Blue Belt
+        new DropInfo(1132214, 750), //Tinkerer's Red Belt
+        new DropInfo(1132215, 750), //Tinkerer's Black Belt
+        new DropInfo(1152120, 750), //Tinkerer's Yellow Shoulder Accessory
+        new DropInfo(1152121, 750), //Tinkerer's Green Shoulder Accessory
+        new DropInfo(1152122, 750), //Tinkerer's Blue Shoulder Accessory
+        new DropInfo(1152123, 750), //Tinkerer's Red Shoulder Accessory
+        new DropInfo(1152124, 750), //Tinkerer's Black Shoulder Accessory
+
+        new DropInfo(1022131, 850), //Spectrum Goggles
+        new DropInfo(1022231, 850), //Aquatic Letter Eye Accessory
+
+        new DropInfo(1012292, 750), //Crying Mask
+        new DropInfo(1012293, 750), //Sad Mask
+        new DropInfo(1012294, 750), //Smiling Mask
+        new DropInfo(1012295, 750), //Angry Mask
+        new DropInfo(1012191, 750), //Dual Blade Mask
+        new DropInfo(1012478, 750), //Condensed Power Crystal
+
+        new DropInfo(1113173,10), //Lighting God Ring
+        new DropInfo(1113149,950), //Silver Blossom Ring
+
+        new DropInfo(1152088,750), //Maple Amethysian Shoulder
+        new DropInfo(1152089,750), //Grand Maple Amethysian Shoulder
+        new DropInfo(1152170,750), //Royal Black Metal Shoulder
+        new DropInfo(1152160 ,750) //SweetWater Shoulder
+        ));
+    }
+    //------------------------------------------------------------------------------------------------------------------
+    /**
+     * Initiate at the loading of the game - only once!
+     * Taking all the nx items from the CashShopItem DB, filter only weapon, hats, overall, tops, bottoms, gloves, shoes, rings, capes, face, earrings and transparent items
+     * Store all the relavent items in - "nxEquipDrops"
+     */
+    private static void initNxEquipDrops() {
+        List<CashShopItem> drops = (List<CashShopItem>) DatabaseManager.getObjListFromDB(CashShopItem.class);
+        //Set<DropInfo> set = new HashSet<>();
+        for (CashShopItem drop : drops) {
+            Integer itemID = drop.getItemID();
+            Integer dbID = drop.getId();
+            String nxcategory = drop.getCategory();
+            if(!nxEquipDrops.containsKey(dbID)) {
+                if (nxcategory.equalsIgnoreCase("Weapon") || nxcategory.equalsIgnoreCase("Weapon 2") ||
+                        nxcategory.equalsIgnoreCase("Weapon 3") || nxcategory.equalsIgnoreCase("Hat") ||
+                        nxcategory.equalsIgnoreCase("Hat 2") || nxcategory.equalsIgnoreCase("Hat 3") ||
+                        nxcategory.equalsIgnoreCase("Hat 4") || nxcategory.equalsIgnoreCase("Hat 5") ||
+                        nxcategory.equalsIgnoreCase("Hat 6") || nxcategory.equalsIgnoreCase("Face") ||
+                        nxcategory.equalsIgnoreCase("Earrings") || nxcategory.equalsIgnoreCase("Overall") ||
+                        nxcategory.equalsIgnoreCase("Overall 2") || nxcategory.equalsIgnoreCase("Overall 3") ||
+                        nxcategory.equalsIgnoreCase("Overall 4") || nxcategory.equalsIgnoreCase("Top") ||
+                        nxcategory.equalsIgnoreCase("Top") || nxcategory.equalsIgnoreCase("Top 2") ||
+                        nxcategory.equalsIgnoreCase("Bottom") || nxcategory.equalsIgnoreCase("Bottom 2") ||
+                        nxcategory.equalsIgnoreCase("Shoes") || nxcategory.equalsIgnoreCase("Shoes 2") ||
+                        nxcategory.equalsIgnoreCase("Glove") || nxcategory.equalsIgnoreCase("Ring") ||
+                        nxcategory.equalsIgnoreCase("Ring 2") || nxcategory.equalsIgnoreCase("Cape") ||
+                        nxcategory.equalsIgnoreCase("Cape 2") || nxcategory.equalsIgnoreCase("Transparent")) {
+
+                    //set.add(new DropInfo(id, 100)); //creating a list of all the possible nx equips in the DB
+                    nxEquipDrops.put(dbID, Util.makeSet(new DropInfo(itemID, 2)));
+                }
+            }
+        }
+    }
+    //------------------------------------------------------------------------------------------------------------------
     public static int getGenderFromId(int nItemID) {
         int result;
 
@@ -1386,16 +1483,16 @@ public class ItemConstants {
             case 1082556: // Sweetwater Gloves
             case 1102623: // Sweetwater Cape
             case 1132247: // Sweetwater Belt
-                if (ServerConstants.VERSION >= 197) {
+                if (ServerConstants.VERSION >= 176) { //197
                     return 15; //was 15
                 }
             case 1182060: // Ghost Ship Exorcist
             case 1182273: // Sengoku Hakase Badge
-                if (ServerConstants.VERSION >= 199) {
+                if (ServerConstants.VERSION >= 176) { // >=199
                     return 22;
                 }
         }
-        return ServerConstants.VERSION >= 197 ? 25 : 15;
+        return ServerConstants.VERSION >= 176 ? 25 : 15; //>=197
     }
 
     public static int getEquippedSummonSkillItem(int itemID, short job) {
@@ -1450,7 +1547,53 @@ public class ItemConstants {
         }
         return equipDropsPerLevel.getOrDefault(itemJob, new HashMap<>()).getOrDefault(level, new HashSet<>());
     }
+    //------------------------------------------------------------------------------------------------------------------
+    /**
+     *This Function get called in the Mob->dropDrops()
+     * Taking the Mob ID and return the relevant Drop pool -> "bossDrops"
+     * @return bossDrops - HashMap contains the array of the drops that relevant to the boss
+     */
+    public static Set<DropInfo> getBossDrops(Mob mob){
 
+        Integer mobId = mob.getTemplateId();
+
+        return bossDrops.get(mobId);
+    }
+    //------------------------------------------------------------------------------------------------------------------
+    /**
+     *This Function get called in the Mob->dropDrops()
+     * Taking 1 Random item from the Nx Array i create in "nxEquipDrops"
+     * @return retVal - HashMap contains 1 random nx equip
+     */
+    public static Set<DropInfo> getNxEquipDrops(){
+        // Define a SetMap that will hold my potential nx drops -
+        Set<DropInfo> retVal = new HashSet<>();
+        // Define a flag that will stop the loop -
+        boolean finFlag = true;
+        // Define a safeStop counter that will avoid infinite loop -
+        byte safeStop = 0;
+
+        //System.out.println("Starting the loop -");
+        while (finFlag){
+
+            Random rand = new Random();
+            Integer randomElement = rand.nextInt(nxEquipDrops.size());
+            //System.out.println("rnd num - " + randomElement);
+            if (nxEquipDrops.get(randomElement)!= null && !nxEquipDrops.get(randomElement).isEmpty() && nxEquipDrops.get(randomElement).size() > 0){
+                finFlag = false;
+                retVal.addAll(nxEquipDrops.get(randomElement));
+                //System.out.println("got an item - " +retVal);
+            }
+
+            if (safeStop == 20) {
+                finFlag = false;
+            }
+            //System.out.println("Safe run num: " + safeStop);
+            safeStop++;
+        }
+        return retVal;
+    }
+    //------------------------------------------------------------------------------------------------------------------
     public static boolean isMiuMiuMerchant(int itemID) {
         return itemID == 5450000 || itemID == 5450003 || itemID == 5450007 || itemID == 5450012 || itemID == 5450013 || itemID == 5450004;
     }

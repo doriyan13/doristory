@@ -45,7 +45,7 @@ public class GameConstants {
 
     // Drop
     public static final int DROP_HEIGHT = 20; // was 20
-    public static final int DROP_DIFF = 25; //was 25, hmmm
+    public static final int DROP_DIFF = 50; //was 25, hmmm
     public static final int DROP_REMAIN_ON_GROUND_TIME = 120; // 2 minutes
     public static final int DROP_REMOVE_OWNERSHIP_TIME = 30; // 30 sec
     public static final int MIN_MONEY_MULT = 60;// was 6
@@ -105,8 +105,8 @@ public class GameConstants {
     public static final double RED_EXP_ORB_MULT = 5;
 
     // Mob
-    public static final int MOB_SKILL_CHANCE = 50; //was 20
-    public static final int NX_DROP_CHANCE = 70;
+    public static final int MOB_SKILL_CHANCE = 30; //was 20
+    public static final int NX_DROP_CHANCE = 20;
 
     // Elite mob
     public static final int ELITE_MOB_SKILL_COUNT = 2;

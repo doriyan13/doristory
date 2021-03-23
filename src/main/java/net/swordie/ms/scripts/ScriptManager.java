@@ -1008,6 +1008,15 @@ public interface ScriptManager extends Observer {
 	void giveMesos(long mesos);
 
 	/**
+	 * Changes the linked {@link Char}'s maple points.
+	 * Example: "sm.giveMesos(100000)"
+	 *
+	 * @param maplePoints
+	 * 		The amount of mesos to change the {@link Char}'s mesos by.
+	 */
+	void giveMaplePoints(long maplePoints);
+
+	/**
 	 * Changes the linked {@link Char}'s mesos.
 	 * Example: "sm.deductMesos(100000)"
 	 *

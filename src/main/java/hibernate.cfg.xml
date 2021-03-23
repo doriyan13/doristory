@@ -7,10 +7,6 @@
             org.hibernate.dialect.MySQLDialect
         </property>
 
-        <property name = "hibernate.connection.driver_class">
-            com.mysql.jdbc.Driver
-        </property>
-
         <property name = "hibernate.connection.url">
             jdbc:mysql://127.0.0.1:3306/swordie?autoReconnect=true&amp;useSSL=false
         </property>

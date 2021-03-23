@@ -1009,7 +1009,7 @@ public class AdminCommands {
         }
     }
 
-    @Command(names = {"invincible"}, requiredType = Tester)
+    @Command(names = {"invincible","god"}, requiredType = Tester)
     public static class Invincible extends AdminCommand {
         public static void execute(Char chr, String[] args) {
             chr.setInvincible(!chr.isInvincible());
@@ -1988,6 +1988,16 @@ public class AdminCommands {
             int amount = Integer.valueOf(args [2]);
             Char other = chr.getWorld().getCharByName(name);
             other.addNx(amount);
+        }
+    }
+
+    @Command(names = {"jobs"}, requiredType = Tester)
+    public static class Jobs extends AdminCommand {
+
+        public static void execute(Char chr, String[] args) {
+            int currJob = chr.getJob();
+            chr.getScriptManager().openNpc(9000386);
+
         }
     }
 }

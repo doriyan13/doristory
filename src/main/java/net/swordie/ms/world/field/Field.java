@@ -32,20 +32,14 @@ import net.swordie.ms.loaders.containerclasses.MobSkillInfo;
 import net.swordie.ms.scripts.ScriptManager;
 import net.swordie.ms.scripts.ScriptManagerImpl;
 import net.swordie.ms.scripts.ScriptType;
-import net.swordie.ms.util.FileTime;
-import net.swordie.ms.util.Position;
-import net.swordie.ms.util.Rect;
-import net.swordie.ms.util.Util;
+import net.swordie.ms.util.*;
 import net.swordie.ms.util.container.Tuple;
-import net.swordie.ms.world.Channel;
-import net.swordie.ms.world.event.InGameEventManager;
 import org.apache.log4j.Logger;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ScheduledFuture;
@@ -1130,6 +1124,68 @@ public class Field {
             }
         }
     }
+    //------------------------------------------------------------------------------------------------------------------
+    /**
+     * Drops a list of items evenly spaced along a line of the specified parameters.
+     * @param dropInfos Drop object that will hold - itemId, chance.
+     * @param randomize If the items should be randomized drop in order.
+     * @param range     Range overall that the items should be dropped along, centered on the starting position.
+     * @param startPosX The X Position in which the Drops originate from.
+     * @param startPosY The Y Position in which the Drops originate from.
+     * @param delay     Delay between every drop.
+     * @param dropRate The DropRate for an item.
+     */
+
+    public void customdropItemsLine(Set<DropInfo> dropInfos, boolean randomize, int range, int startPosX, int startPosY, int delay, int dropRate) {
+        if (dropInfos.size() == 0) {
+            return; // avoid divide by zero error
+        }
+        //List of the items that will drop
+        List<HashMap<Integer, Integer>> itemList = new ArrayList<>();
+        int index = 0;
+        //Filling the itemList that going to drop, here we will add an chance that will determine if the item going to enter the mix or not
+        for (DropInfo dropInfo : dropInfos) {
+            if (dropInfo.willDrop(dropRate)) {
+                HashMap<Integer, Integer> quantityMap = new HashMap<>();
+                quantityMap.put(dropInfo.getItemID(), 1);
+                itemList.add(index, quantityMap);
+                index++;
+            }
+        }
+
+        if (randomize){
+            Collections.shuffle(itemList);
+        }
+
+        Tuple<Foothold, Foothold> lrFh = getMinMaxNonWallFH();
+        range = Math.max(range, dropInfos.size());
+        int offset = Math.max((range / dropInfos.size()) * 2, 3); // we want offset >= 3 || multiply by 2 so that the drops go past the start point
+        int i2 = 0;
+
+        for (HashMap map : itemList) {
+            int endPosX = startPosX - range + (offset * i2);
+            //endPosX = Math.max(endPosX, lrFh.getLeft().getX1()); // left is lowest x val
+            //endPosX = Math.min(endPosX, lrFh.getRight().getX1()); // right is highest x val
+
+            endPosX = Randomizer.rand(Math.max(endPosX, lrFh.getLeft().getX1()), Math.min(endPosX, lrFh.getRight().getX1()));
+            startPosX = Randomizer.rand(endPosX-1 ,startPosX);
+            int itemID = (Integer) map.keySet().toArray()[0];
+            int quantity = (Integer) map.get(itemID);
+
+            i2++;
+
+            if (itemID > 999999) { // item
+                Drop drop = new Drop(getNewObjectID());
+                drop.setItem(ItemData.getItemDeepCopy(itemID));
+                drop.getItem().setQuantity(quantity);
+                Position startPos = new Position(startPosX, startPosY);
+                Position endPos = new Position(endPosX, findFootHoldBelow(new Position(endPosX, startPosY - 25)).getY1());
+                drop(drop, startPos, endPos, true, delay * i2);
+            }
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     /**
      * Drops a list of items evenly spaced along a line of the specified parameters.

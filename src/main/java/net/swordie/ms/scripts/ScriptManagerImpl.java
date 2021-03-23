@@ -50,7 +50,6 @@ import net.swordie.ms.util.FileTime;
 import net.swordie.ms.util.Position;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
-import net.swordie.ms.util.container.Tuple;
 import net.swordie.ms.world.World;
 import net.swordie.ms.world.event.*;
 import net.swordie.ms.world.field.*;
@@ -77,7 +76,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 import static net.swordie.ms.client.character.skills.temp.CharacterTemporaryStat.RideVehicle;
-import static net.swordie.ms.enums.ChatType.*;
+import static net.swordie.ms.enums.ChatType.Notice2;
+import static net.swordie.ms.enums.ChatType.SystemNotice;
 import static net.swordie.ms.life.mob.skill.MobSkillStat.fixDamR;
 import static net.swordie.ms.life.npc.NpcMessageType.*;
 
@@ -1853,6 +1853,16 @@ public class ScriptManagerImpl implements ScriptManager {
 	public void giveMesos(long mesos) {
 		chr.addMoney(mesos);
 		chr.write(WvsContext.incMoneyMessage((int) mesos));
+	}
+
+	@Override
+	public void giveMaplePoints(long maplePoints) {
+		//chr.addM addMoney(maplePoints);
+		//chr.setRewardPoints() ~> TODO: add the stat param - MaplePoints and then it's suppose to work
+		chr.getUser().addMaplePoints((int)maplePoints);
+		Integer totalMaplePoints = chr.getUser().getMaplePoints();
+		//chr.setRewardPoints((int) maplePoints);
+		chr.write(WvsContext.setMaplePoints(totalMaplePoints));
 	}
 
 	@Override
