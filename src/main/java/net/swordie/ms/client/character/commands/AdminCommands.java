@@ -1990,4 +1990,14 @@ public class AdminCommands {
             other.addNx(amount);
         }
     }
+
+    @Command(names = {"jobs"}, requiredType = Tester)
+    public static class Jobs extends AdminCommand {
+
+        public static void execute(Char chr, String[] args) {
+            int currJob = chr.getJob();
+            chr.getScriptManager().openNpc(9000386);
+
+        }
+    }
 }
