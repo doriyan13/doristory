@@ -1992,12 +1992,18 @@ public class AdminCommands {
     }
 
     @Command(names = {"jobs"}, requiredType = Tester)
-    public static class Jobs extends AdminCommand {
+    public static class jobs extends AdminCommand {
 
         public static void execute(Char chr, String[] args) {
-            int currJob = chr.getJob();
             chr.getScriptManager().openNpc(9000386);
+        }
+    }
 
+    @Command(names = {"jobadvance"}, requiredType = Tester)
+    public static class jobAdvance extends AdminCommand {
+
+        public static void execute(Char chr, String[] args) {
+            chr.getScriptManager().openNpc(9010017);
         }
     }
 }

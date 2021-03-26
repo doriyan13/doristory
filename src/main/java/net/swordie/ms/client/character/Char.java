@@ -5044,7 +5044,7 @@ public class Char {
 		short job = this.getJob();
 		// TODO add evan checks
 		// giant hack, but it's for a command, so it's k
-		if (job % 100 == 12 || job % 100 == 32 || job % 100 == 72) {
+		if (job % 100 == 12 || job % 100 == 22 || job % 100 == 32|| job % 100 == 72) {
 			jobs.add(job);
 			jobs.add((short) (job - 1));
 			jobs.add((short) (job - 2));

@@ -21,7 +21,7 @@ import java.util.List;
 public class GameConstants {
     public static final int CHANNELS_PER_WORLD = 10;
     public static final int BUFFED_CHANNELS = 7;
-    public static final int MOB_EXP_RATE = 3; //was 10
+    public static final int MOB_EXP_RATE = 6; //was 10
     public static final long MAX_MONEY = 9_999_999_999L;
     public static final short DAMAGE_SKIN_MAX_SIZE = 100;
     public static final int MAX_PET_AMOUNT = 3;
@@ -36,20 +36,20 @@ public class GameConstants {
     public static final int VIDEO_FIELD = 931050990; // Used for Effects and/or Videos
     public static final int ARDENTMILL = 910001000;
     public static final int FOREST_OF_TENACITY = 993001000;
-    public static final int DEFAULT_FIELD_MOB_CAPACITY = 25;
+    public static final int DEFAULT_FIELD_MOB_CAPACITY = 30; // was 25
     public static final double DEFAULT_FIELD_MOB_RATE_BY_MOBGEN_COUNT = 1.5;
-    public static final int BASE_MOB_RESPAWN_RATE = 5000; // In milliseconds
+    public static final int BASE_MOB_RESPAWN_RATE = 4500; // In milliseconds was 5000
     public static final double KISHIN_MOB_MULTIPLIER = 1.7;
     public static final double KISHIN_MOB_RATE_MULTIPLIER = 1.7;
     public static final Rect MOB_CHECK_RECT = new Rect(-100, -100, 100, 100);
 
     // Drop
     public static final int DROP_HEIGHT = 20; // was 20
-    public static final int DROP_DIFF = 50; //was 25, hmmm
+    public static final int DROP_DIFF = 25; //was 25, hmmm
     public static final int DROP_REMAIN_ON_GROUND_TIME = 120; // 2 minutes
     public static final int DROP_REMOVE_OWNERSHIP_TIME = 30; // 30 sec
-    public static final int MIN_MONEY_MULT = 60;// was 6
-    public static final int MAX_MONEY_MULT = 90;//was 9
+    public static final int MIN_MONEY_MULT = 80;// was 6
+    public static final int MAX_MONEY_MULT = 110;//was 9
     public static final int MAX_DROP_CHANCE = 10000;
 
     // Combo Kill

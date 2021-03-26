@@ -873,6 +873,47 @@ public class ScriptManagerImpl implements ScriptManager {
 		addSP(spAmount); //Standard added SP upon Job Advancing
 	}
 
+	/**
+	 * This function get the current charcater data and job advance it.
+	 * @param chr - The current charcater
+	 */
+	public void jobAdvance(Char chr) {
+		short currJob = chr.getJob();
+
+		if(currJob % 100 == 0){
+			currJob = (short)(currJob + 10); // Advance to second Job
+		}
+		else if(currJob == 508){
+			currJob = 570; // Advance to second Job
+		}
+		else if(currJob == 501){
+			currJob = 530; // Advance to second Job
+		}
+		else if(currJob == 2001){
+			currJob = 2210; // Advance to second Job
+		}
+		else if(currJob == 2002){
+			currJob = 2300; // Advance to second Job
+		}
+		else if(currJob == 2003){
+			currJob = 2400; // Advance to second Job
+		}
+		else if(currJob == 2005){
+			currJob = 2500; // Advance to second Job
+		}
+		else if(currJob == 2004){
+			currJob = 2700; // Advance to second Job
+		}
+		else if(currJob % 100 == 10 || currJob % 100 == 20 || currJob % 100 == 30 || currJob % 100 == 70){
+			currJob ++; // Advance to second Job
+		}
+		else if(currJob % 100 == 11 || currJob % 100 == 21 || currJob % 100 == 31 || currJob % 100 == 71 || currJob == 433){
+			currJob ++; // Advance to Third Job
+		}
+
+		setJob(currJob);
+	}
+
 	@Override
 	public void giveExp(long expGiven) {
 		chr.addExp(expGiven);
