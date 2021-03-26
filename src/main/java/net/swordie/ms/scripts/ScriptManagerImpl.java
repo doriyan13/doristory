@@ -907,7 +907,7 @@ public class ScriptManagerImpl implements ScriptManager {
 		else if(currJob % 100 == 10 || currJob % 100 == 20 || currJob % 100 == 30 || currJob % 100 == 70){
 			currJob ++; // Advance to second Job
 		}
-		else if(currJob % 100 == 11 || currJob % 100 == 21 || currJob % 100 == 31 || currJob % 100 == 71 || currJob == 433){
+		else if(currJob % 100 == 11 || currJob % 100 == 21 || currJob % 100 == 31 || currJob % 100 == 71 || currJob == 432 || currJob == 433){
 			currJob ++; // Advance to Third Job
 		}
 
