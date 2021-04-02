@@ -14,7 +14,6 @@ import net.swordie.ms.connection.packet.WvsContext;
 import net.swordie.ms.constants.ItemConstants;
 import net.swordie.ms.constants.QuestConstants;
 import net.swordie.ms.enums.*;
-import net.swordie.ms.handlers.EventManager;
 import net.swordie.ms.handlers.Handler;
 import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.handlers.header.OutHeader;
@@ -28,7 +27,8 @@ import java.util.Map;
 
 import static net.swordie.ms.enums.ChatType.Mob;
 import static net.swordie.ms.enums.ChatType.SystemNotice;
-import static net.swordie.ms.enums.EquipBaseStat.*;
+import static net.swordie.ms.enums.EquipBaseStat.iuc;
+import static net.swordie.ms.enums.EquipBaseStat.tuc;
 import static net.swordie.ms.enums.InvType.*;
 
 public class ItemUpgradeHandler {
@@ -388,7 +388,8 @@ public class ItemUpgradeHandler {
             switch (itemID) {
                 case 2049505: // Gold Potential Stamp
                 case 2049517:
-                    equip.setOption(2, equip.getRandomOption(false, 2), false);
+                    equip.setOption(2, equip.getRandomOption(false, 2, ItemConstants.SYSTEM_DEFAULT_CUBE_INDICATOR,
+                            ItemConstants.getAdditionalPrimeCountForCube(ItemConstants.SYSTEM_DEFAULT_CUBE_INDICATOR)), false);
                     break;
                 default:
                     log.error("Unhandled slot extend item " + itemID);
