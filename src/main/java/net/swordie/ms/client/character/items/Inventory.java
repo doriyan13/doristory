@@ -2,8 +2,6 @@ package net.swordie.ms.client.character.items;
 
 import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.constants.GameConstants;
-import net.swordie.ms.constants.ItemConstants;
-import net.swordie.ms.constants.JobConstants;
 import net.swordie.ms.enums.InvType;
 import net.swordie.ms.loaders.ItemData;
 import net.swordie.ms.loaders.containerclasses.ItemInfo;
@@ -144,7 +142,7 @@ public class Inventory {
     }
 
     public Item getItemByItemID(int itemId) {
-        return getItems().stream().filter(item -> item.getItemId() == itemId).findFirst().orElse(null);
+        return getItems().stream().filter(item -> (item.getItemId() == itemId) && item.getQuantity() != 0).findFirst().orElse(null);
     }
 
     public Item getItemByItemIDAndStackable(int itemId) {

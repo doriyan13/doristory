@@ -56,6 +56,12 @@ public class DropHandler {
 
         inPacket.decodeInt(); // tick
         int amount = inPacket.decodeInt();
+        // Verify that i drop valid amount of meso
+        if (amount < 0) { // Check if the amount is negative otherwise deducting money would be positive
+            chr.chatMessage("Cannot drop a negative amount of mesos.");
+            chr.dispose();
+            return;
+        }
         if (chr.getMoney() > amount) {
             chr.deductMoney(amount);
             Drop drop = new Drop(-1, amount);

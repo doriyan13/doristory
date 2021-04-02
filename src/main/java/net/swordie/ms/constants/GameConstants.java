@@ -19,7 +19,7 @@ import java.util.List;
  * Created on 1/23/2018.
  */
 public class GameConstants {
-    public static final int CHANNELS_PER_WORLD = 10;
+    public static final int CHANNELS_PER_WORLD = 1; //was 10
     public static final int BUFFED_CHANNELS = 7;
     public static final int MOB_EXP_RATE = 6; //was 10
     public static final long MAX_MONEY = 9_999_999_999L;

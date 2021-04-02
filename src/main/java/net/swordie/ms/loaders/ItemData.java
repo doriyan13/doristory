@@ -1388,8 +1388,9 @@ public class ItemData {
                                 if (value == null) {
                                     continue;
                                 }
-                                value = value.replace("[\r\n]", "").replace("[R8]", "")
-                                        .replace("\\r", "").replace("\\n", "");
+                                value = value.replace("\n", "").replace("\r", "")
+                                        .replace("\\n", "").replace("\\r", "") // unluko
+                                        .replace("[R8]", "");
                                 switch (name) {
                                     case "count":
                                         iri.setCount(Integer.parseInt(value));
