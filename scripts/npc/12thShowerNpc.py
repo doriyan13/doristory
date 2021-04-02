@@ -52,6 +52,7 @@ if (sm.getChr().getLevel() >= 200):
                         +"\r\n #L43# Mihile #l "
                         +"\r\n #L44# Kaiser #l "
                         +"\r\n #L45# Angelic Buster #l ")
+    sm.setJob(maps[selection])
     sm.getChr().maxSkills()
 else:
     maps = [0,100,200,300,400,430,500,501,508,1000,1100,1200,1300,1400,1500,2000,2001,2100,2210,2300,2410,2500,2700,3100,3101,3200,3300,3500,3700,3600,4100,4200,6100,6500]
@@ -87,8 +88,8 @@ else:
                         +"\r\n #L28# Kanna #l "
                         +"\r\n #L29# Kaiser #l "
                         +"\r\n #L30# Angelic Buster #l")
+    sm.setJob(maps[selection])
 
-sm.setJob(maps[selection])
 sm.dispose()
 #print(selection)
 

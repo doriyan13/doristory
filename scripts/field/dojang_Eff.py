@@ -96,6 +96,18 @@ sm.showEffectToField(WzConstants.EFFECT_DOJO_STAGE)
 
 sleep(GameConstants.DOJO_SPAWM_BOSS_DELAY)
 sm.spawnMob(bossPerFloor[sm.getFieldID()], 0, 7, False) # Spawns mob based on Field ID
+sm.waitForMobDeath(bossPerFloor[sm.getFieldID()]) # like a listener for when the mob will die and can give reward!
+sm.getChr().chatMessage("curr stage is: "+ str(stage)) #that way i can control when i want to give my currency for the player!
+if 1 <= stage <= 10:
+    sm.giveItem(4310034,1)
+elif 10 < stage <= 20:
+    sm.giveItem(4310034,5)
+elif 20 < stage <= 30:
+    sm.giveItem(4310034,7)
+elif 30 < stage <= 40:
+    sm.giveItem(4310034,10)
+else:
+    sm.giveItem(4310025,1)
+    sm.giveItem(4310034,50)
 
-sm.waitForMobDeath(bossPerFloor[sm.getFieldID()])
 sm.showEffectToField(WzConstants.EFFECT_DOJO_CLEAR)
